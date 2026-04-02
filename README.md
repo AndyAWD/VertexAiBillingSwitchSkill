@@ -1,6 +1,6 @@
 # Vertex AI Billing Switch for Gemini CLI
 
-[![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)](./en/vertex-ai-billing-switch-skill/SKILL.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](./skills/vertex-ai-billing-switch-en/SKILL.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)]()
 
