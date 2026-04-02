@@ -29,22 +29,32 @@
    winget install -e --id Google.CloudSDK --accept-source-agreements --accept-package-agreements
    ```
 
-4. 驗證安裝：
+4. 驗證安裝並設定 `{gcloud_cmd}`：
    ```bash
    gcloud --version
    ```
 
-   > 若驗證失敗（當前終端機 session 的 PATH 尚未包含新安裝路徑），使用 Node.js 搜尋實際安裝路徑：
-   > ```bash
-   > node -e "const path=require('path'),fs=require('fs');const c=[path.join(process.env.LOCALAPPDATA||'','Google','Cloud SDK','google-cloud-sdk','bin','gcloud.cmd'),'C:\\\\Program Files\\\\Google\\\\Cloud SDK\\\\google-cloud-sdk\\\\bin\\\\gcloud.cmd','C:\\\\Program Files (x86)\\\\Google\\\\Cloud SDK\\\\google-cloud-sdk\\\\bin\\\\gcloud.cmd'];for(const p of c){if(fs.existsSync(p)){process.stdout.write(p);break;}}"
-   > ```
-   >
-   > 然後用 PowerShell 的呼叫運算符（`&`）執行，避免路徑中有空格造成解析錯誤：
-   > ```bash
-   > powershell -Command "& '{found_gcloud_path}' --version"
-   > ```
-   >
-   > **注意：** 此 PATH 問題只影響當前終端機 session。重啟終端機後，`gcloud` 就能直接使用，無需完整路徑。
+   - **若成功**：設定 `{gcloud_cmd}` = `gcloud`，繼續執行 Step 3。
+
+   - **若失敗**（當前終端機 session 的 PATH 尚未包含新安裝路徑）：
+
+     使用 Node.js 搜尋實際安裝路徑：
+     ```bash
+     node -e "const path=require('path'),fs=require('fs');const c=[path.join(process.env.LOCALAPPDATA||'','Google','Cloud SDK','google-cloud-sdk','bin','gcloud.cmd'),'C:\\\\Program Files\\\\Google\\\\Cloud SDK\\\\google-cloud-sdk\\\\bin\\\\gcloud.cmd','C:\\\\Program Files (x86)\\\\Google\\\\Cloud SDK\\\\google-cloud-sdk\\\\bin\\\\gcloud.cmd'];for(const p of c){if(fs.existsSync(p)){process.stdout.write(p);break;}}"
+     ```
+
+     將輸出儲存為 `{found_gcloud_path}`，用 PowerShell 呼叫運算符（`&`）驗證，避免路徑含空格的解析錯誤：
+     ```bash
+     powershell -Command "& '{found_gcloud_path}' --version"
+     ```
+
+     - **驗證成功**：設定 `{gcloud_cmd}` = `{found_gcloud_path}`
+     - **驗證失敗**：告知使用者手動安裝 gcloud 後重新執行此 Skill
+
+     > **重要**：`{gcloud_cmd}` 是此次 session 的工作變數，後續 Step 3/4/5 所有 gcloud 指令請改用：
+     > `powershell -Command "& '{gcloud_cmd}' <arguments>"`
+     >
+     > **注意：** 此 PATH 問題只影響當前終端機 session。重啟終端機後，`gcloud` 就能直接使用，無需完整路徑。
 
 ### Google 官方安裝
 
@@ -56,7 +66,20 @@ node {skill_dir}/scripts/install-gcloud.mjs
 
 > 腳本會將結果以 JSON 格式輸出到 stdout，日誌輸出到 stderr。
 
-安裝完成後，再次執行 `gcloud --version` 確認安裝成功。若失敗，告知使用者手動安裝。
+解析腳本輸出的 JSON：
+
+- **若 `success === false`**：告知使用者手動安裝 gcloud 後重新執行此 Skill。
+- **若 `success === true`**：
+  1. 嘗試執行 `gcloud --version`
+     - **成功**：設定 `{gcloud_cmd}` = `gcloud`，繼續執行 Step 3。
+     - **失敗**（PATH 未更新）：
+       設定 `{gcloud_cmd}` = `{gcloudBinPath}\gcloud.cmd`（從 JSON 的 `gcloudBinPath` 欄位取得目錄路徑）
+       用 PowerShell 呼叫運算符驗證：
+       ```bash
+       powershell -Command "& '{gcloud_cmd}' --version"
+       ```
+       > **重要**：後續 Step 3/4/5 所有 gcloud 指令請改用：
+       > `powershell -Command "& '{gcloud_cmd}' <arguments>"`
 
 ---
 

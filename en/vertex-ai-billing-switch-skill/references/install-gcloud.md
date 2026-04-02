@@ -29,22 +29,32 @@ First inform the user:
    winget install -e --id Google.CloudSDK --accept-source-agreements --accept-package-agreements
    ```
 
-4. Verify installation:
+4. Verify installation and set `{gcloud_cmd}`:
    ```bash
    gcloud --version
    ```
 
-   > If verification fails (the current terminal session's PATH may not yet include the new installation), use Node.js to locate the actual installation path:
-   > ```bash
-   > node -e "const path=require('path'),fs=require('fs');const c=[path.join(process.env.LOCALAPPDATA||'','Google','Cloud SDK','google-cloud-sdk','bin','gcloud.cmd'),'C:\\\\Program Files\\\\Google\\\\Cloud SDK\\\\google-cloud-sdk\\\\bin\\\\gcloud.cmd','C:\\\\Program Files (x86)\\\\Google\\\\Cloud SDK\\\\google-cloud-sdk\\\\bin\\\\gcloud.cmd'];for(const p of c){if(fs.existsSync(p)){process.stdout.write(p);break;}}"
-   > ```
-   >
-   > Then verify with the found path using the PowerShell call operator (`&`) to handle spaces:
-   > ```bash
-   > powershell -Command "& '{found_gcloud_path}' --version"
-   > ```
-   >
-   > **Note:** This PATH issue only affects the current terminal session. After restarting the terminal, `gcloud` will be available directly without a full path.
+   - **If it succeeds**: Set `{gcloud_cmd}` = `gcloud`, then proceed to Step 3.
+
+   - **If it fails** (the current terminal session's PATH may not yet include the new installation):
+
+     Use Node.js to locate the actual installation path:
+     ```bash
+     node -e "const path=require('path'),fs=require('fs');const c=[path.join(process.env.LOCALAPPDATA||'','Google','Cloud SDK','google-cloud-sdk','bin','gcloud.cmd'),'C:\\\\Program Files\\\\Google\\\\Cloud SDK\\\\google-cloud-sdk\\\\bin\\\\gcloud.cmd','C:\\\\Program Files (x86)\\\\Google\\\\Cloud SDK\\\\google-cloud-sdk\\\\bin\\\\gcloud.cmd'];for(const p of c){if(fs.existsSync(p)){process.stdout.write(p);break;}}"
+     ```
+
+     Store the output as `{found_gcloud_path}`, then verify with the PowerShell call operator (`&`) to handle paths with spaces:
+     ```bash
+     powershell -Command "& '{found_gcloud_path}' --version"
+     ```
+
+     - **Verification succeeds**: Set `{gcloud_cmd}` = `{found_gcloud_path}`
+     - **Verification fails**: Inform the user to install gcloud manually and re-run this Skill
+
+     > **Important**: `{gcloud_cmd}` is a session working variable. All subsequent gcloud commands in Steps 3/4/5 must use:
+     > `powershell -Command "& '{gcloud_cmd}' <arguments>"`
+     >
+     > **Note:** This PATH issue only affects the current terminal session. After restarting the terminal, `gcloud` will be available directly without a full path.
 
 ### Google official
 
@@ -56,7 +66,20 @@ node {skill_dir}/scripts/install-gcloud.mjs
 
 > The script outputs results as JSON to stdout and logs to stderr.
 
-After installation, run `gcloud --version` again to confirm success. If it fails, inform the user to install manually.
+Parse the JSON output from the script:
+
+- **If `success === false`**: Inform the user to install gcloud manually and re-run this Skill.
+- **If `success === true`**:
+  1. Try running `gcloud --version`
+     - **Succeeds**: Set `{gcloud_cmd}` = `gcloud`, then proceed to Step 3.
+     - **Fails** (PATH not updated):
+       Set `{gcloud_cmd}` = `{gcloudBinPath}\gcloud.cmd` (using the `gcloudBinPath` directory from the JSON output)
+       Verify with the PowerShell call operator:
+       ```bash
+       powershell -Command "& '{gcloud_cmd}' --version"
+       ```
+       > **Important**: All subsequent gcloud commands in Steps 3/4/5 must use:
+       > `powershell -Command "& '{gcloud_cmd}' <arguments>"`
 
 ---
 

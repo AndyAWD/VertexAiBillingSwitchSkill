@@ -26,8 +26,13 @@ Inform the user:
 
 Use `run_shell_command`:
 
+If `{gcloud_cmd}` = `gcloud`:
 ```bash
 gcloud projects create {project_id} --name="{project_id}"
+```
+If `{gcloud_cmd}` is a full path:
+```bash
+powershell -Command "& '{gcloud_cmd}' projects create {project_id} --name='{project_id}'"
 ```
 
 **Error handling:**
@@ -42,14 +47,24 @@ gcloud projects create {project_id} --name="{project_id}"
 
 Use `run_shell_command`:
 
+If `{gcloud_cmd}` = `gcloud`:
 ```bash
 gcloud billing projects link {project_id} --billing-account={account_id} --quiet
+```
+If `{gcloud_cmd}` is a full path:
+```bash
+powershell -Command "& '{gcloud_cmd}' billing projects link {project_id} --billing-account={account_id} --quiet"
 ```
 
 Verify the link:
 
+If `{gcloud_cmd}` = `gcloud`:
 ```bash
 gcloud billing projects describe {project_id} --format="value(billingEnabled)"
+```
+If `{gcloud_cmd}` is a full path:
+```bash
+powershell -Command "& '{gcloud_cmd}' billing projects describe {project_id} --format=value(billingEnabled)"
 ```
 
 Confirm it returns `True`.

@@ -26,8 +26,13 @@
 
 使用 `run_shell_command`：
 
+若 `{gcloud_cmd}` = `gcloud`：
 ```bash
 gcloud projects create {project_id} --name="{project_id}"
+```
+若 `{gcloud_cmd}` 為完整路徑：
+```bash
+powershell -Command "& '{gcloud_cmd}' projects create {project_id} --name='{project_id}'"
 ```
 
 **錯誤處理：**
@@ -42,14 +47,24 @@ gcloud projects create {project_id} --name="{project_id}"
 
 使用 `run_shell_command`：
 
+若 `{gcloud_cmd}` = `gcloud`：
 ```bash
 gcloud billing projects link {project_id} --billing-account={account_id} --quiet
+```
+若 `{gcloud_cmd}` 為完整路徑：
+```bash
+powershell -Command "& '{gcloud_cmd}' billing projects link {project_id} --billing-account={account_id} --quiet"
 ```
 
 驗證連結成功：
 
+若 `{gcloud_cmd}` = `gcloud`：
 ```bash
 gcloud billing projects describe {project_id} --format="value(billingEnabled)"
+```
+若 `{gcloud_cmd}` 為完整路徑：
+```bash
+powershell -Command "& '{gcloud_cmd}' billing projects describe {project_id} --format=value(billingEnabled)"
 ```
 
 確認回傳 `True`。

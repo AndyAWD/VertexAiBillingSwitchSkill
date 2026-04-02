@@ -235,6 +235,8 @@ node -e "process.stdout.write(require('os').homedir())"
 
 Store as `{home_dir}`. Derive: `{skill_dir}` = `{home_dir}/.gemini/skills/vertex-ai-billing-switch-skill`
 
+Also set the default: `{gcloud_cmd}` = `gcloud` (if Windows installation leaves PATH not updated, this will be overwritten with the full path at the end of Step 2)
+
 ### Check gcloud CLI
 
 > **Optimization:** If Step 1 already determined that gcloud is not installed (check 1 failed), skip this command and go directly to the conditional interaction point below.
@@ -379,8 +381,14 @@ First, inform the user:
 
 Then use `run_shell_command`:
 
+If `{gcloud_cmd}` = `gcloud` (PATH is available):
 ```bash
 gcloud auth login
+```
+
+If `{gcloud_cmd}` is a full path (Windows installation with PATH not yet updated):
+```bash
+powershell -Command "& '{gcloud_cmd}' auth login"
 ```
 
 - **Only** execute `gcloud auth login`
@@ -493,8 +501,14 @@ Use `ask_user`:
 
 Use `run_shell_command`:
 
+If `{gcloud_cmd}` = `gcloud`:
 ```bash
 gcloud billing accounts list --format="json"
+```
+
+If `{gcloud_cmd}` is a full path:
+```bash
+powershell -Command "& '{gcloud_cmd}' billing accounts list --format=json"
 ```
 
 Filter accounts where `open === true`.
@@ -578,20 +592,35 @@ Then use `run_shell_command` sequentially:
 
 **Set default GCP project:**
 
+If `{gcloud_cmd}` = `gcloud`:
 ```bash
 gcloud config set project {project_id}
+```
+If `{gcloud_cmd}` is a full path:
+```bash
+powershell -Command "& '{gcloud_cmd}' config set project {project_id}"
 ```
 
 **Enable Vertex AI API:**
 
+If `{gcloud_cmd}` = `gcloud`:
 ```bash
 gcloud services enable aiplatform.googleapis.com --project={project_id}
+```
+If `{gcloud_cmd}` is a full path:
+```bash
+powershell -Command "& '{gcloud_cmd}' services enable aiplatform.googleapis.com --project={project_id}"
 ```
 
 **Set up ADC:**
 
+If `{gcloud_cmd}` = `gcloud`:
 ```bash
 gcloud auth application-default login --project={project_id}
+```
+If `{gcloud_cmd}` is a full path:
+```bash
+powershell -Command "& '{gcloud_cmd}' auth application-default login --project={project_id}"
 ```
 
 **Update environment variables:**

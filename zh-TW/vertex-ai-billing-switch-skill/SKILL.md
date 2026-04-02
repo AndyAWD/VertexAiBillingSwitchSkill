@@ -235,6 +235,8 @@ node -e "process.stdout.write(require('os').homedir())"
 
 儲存為 `{home_dir}`，並推導：`{skill_dir}` = `{home_dir}/.gemini/skills/vertex-ai-billing-switch-skill`
 
+同時設定預設值：`{gcloud_cmd}` = `gcloud`（若 Windows 安裝後 PATH 未更新，此值將在 Step 2 末尾被覆寫為完整路徑）
+
 ### 檢查 gcloud CLI
 
 > **優化提示：** 若 Step 1 已確認 gcloud 未安裝（檢查 1 失敗），跳過此指令，直接進入下方的條件互動點。
@@ -379,8 +381,14 @@ node -e "process.stdout.write(process.platform)"
 
 然後使用 `run_shell_command`：
 
+若 `{gcloud_cmd}` = `gcloud`（PATH 正常）：
 ```bash
 gcloud auth login
+```
+
+若 `{gcloud_cmd}` 為完整路徑（Windows 安裝後 PATH 未更新）：
+```bash
+powershell -Command "& '{gcloud_cmd}' auth login"
 ```
 
 - **僅執行** `gcloud auth login`
@@ -493,8 +501,14 @@ gcloud auth login
 
 使用 `run_shell_command`：
 
+若 `{gcloud_cmd}` = `gcloud`：
 ```bash
 gcloud billing accounts list --format="json"
+```
+
+若 `{gcloud_cmd}` 為完整路徑：
+```bash
+powershell -Command "& '{gcloud_cmd}' billing accounts list --format=json"
 ```
 
 篩選 `open === true` 的帳戶。
@@ -578,20 +592,35 @@ gcloud billing accounts list --format="json"
 
 **設定預設 GCP 專案：**
 
+若 `{gcloud_cmd}` = `gcloud`：
 ```bash
 gcloud config set project {project_id}
+```
+若 `{gcloud_cmd}` 為完整路徑：
+```bash
+powershell -Command "& '{gcloud_cmd}' config set project {project_id}"
 ```
 
 **啟用 Vertex AI API：**
 
+若 `{gcloud_cmd}` = `gcloud`：
 ```bash
 gcloud services enable aiplatform.googleapis.com --project={project_id}
+```
+若 `{gcloud_cmd}` 為完整路徑：
+```bash
+powershell -Command "& '{gcloud_cmd}' services enable aiplatform.googleapis.com --project={project_id}"
 ```
 
 **設定 ADC：**
 
+若 `{gcloud_cmd}` = `gcloud`：
 ```bash
 gcloud auth application-default login --project={project_id}
+```
+若 `{gcloud_cmd}` 為完整路徑：
+```bash
+powershell -Command "& '{gcloud_cmd}' auth application-default login --project={project_id}"
 ```
 
 **更新環境變數：**
