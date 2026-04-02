@@ -49,6 +49,13 @@
 
 1. 將 Skill 目錄複製到 Gemini CLI 的 skills 資料夾：
 
+   **Windows (PowerShell)**:
+   ```powershell
+   # 繁體中文版
+   Copy-Item -Path "zh-TW\vertex-ai-billing-switch-skill" -Destination "$env:USERPROFILE\.gemini\skills\" -Recurse -Force
+   ```
+
+   **macOS / Linux**:
    ```bash
    # 繁體中文版
    cp -r zh-TW/vertex-ai-billing-switch-skill ~/.gemini/skills/
