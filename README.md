@@ -47,22 +47,30 @@ A **Gemini CLI Skill** that automates GCP Vertex AI authentication setup and dep
 
 ## Quick Start
 
-1. Copy the Skill directory to your Gemini CLI skills folder:
+1. **Install the Skill:**
 
-   **Windows (PowerShell)**:
-   ```powershell
-   Copy-Item -Path "en\vertex-ai-billing-switch-skill" -Destination "$env:USERPROFILE\.gemini\skills\" -Recurse -Force
+   **Method A: Install via Gemini CLI (Recommended)**
+   ```bash
+   gemini extensions install https://github.com/AndyAWD/VertexAiBillingSwitchSkill
    ```
 
-   **macOS / Linux**:
+   **Method B: Manual Installation**
+   Copy the Skill directory to your Gemini CLI skills folder:
+
+   *Windows (PowerShell)*:
+   ```powershell
+   Copy-Item -Path "skills\vertex-ai-billing-switch-en" -Destination "$env:USERPROFILE\.gemini\skills\" -Recurse -Force
+   ```
+
+   *macOS / Linux*:
    ```bash
-   cp -r en/vertex-ai-billing-switch-skill ~/.gemini/skills/
+   cp -r skills/vertex-ai-billing-switch-en ~/.gemini/skills/
    ```
 
 2. In Gemini CLI, run:
 
    ```
-   /vertex-ai-billing-switch-skill run the skill workflow
+   /vertex-ai-billing-switch-en run the skill workflow
    ```
 
 3. Follow the interactive prompts — the skill will handle everything automatically.
@@ -79,7 +87,7 @@ A **Gemini CLI Skill** that automates GCP Vertex AI authentication setup and dep
 ### Setup Wizard
 
 ```
-/vertex-ai-billing-switch-skill run the skill workflow
+/vertex-ai-billing-switch-en run the skill workflow
         │
         ▼
   Step 0 ── Disclaimer confirmation
@@ -191,7 +199,7 @@ VertexAiBillingSwitchSkill/
 A `consume-credits.mjs` script is included to intentionally exhaust quota and verify the auto-switch mechanism works:
 
 ```bash
-node en/vertex-ai-billing-switch-skill/scripts/consume-credits.mjs
+node skills/vertex-ai-billing-switch-en/scripts/consume-credits.mjs
 ```
 
 The script sends large Vertex AI API requests in a loop until a `402`, `BILLING_DISABLED`, or quota-exceeded error is returned, which triggers the Hook on next Gemini CLI startup.
