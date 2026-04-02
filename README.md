@@ -155,22 +155,23 @@ Gemini CLI starts → SessionStart Hook fires
 VertexAiBillingSwitchSkill/
 ├── README.md                              # This file (English)
 ├── README.zh-TW.md                        # Traditional Chinese version
+├── package.json                           # NPM package manifest
+├── gemini-extension.json                  # Gemini CLI extension manifest
 │
-├── en/                                    # English Skill
-│   └── vertex-ai-billing-switch-skill/    # Copy this folder to ~/.gemini/skills/
-│       ├── SKILL.md                       # Skill definition (loaded by Gemini CLI)
-│       ├── references/                    # On-demand reference docs
-│       │   ├── install-gcloud.md          # Platform-specific gcloud installation
-│       │   ├── create-project.md          # Auto-create GCP project sub-flow
-│       │   └── deploy-hook.md             # First-time Hook deployment
-│       ├── assets/
-│       │   └── vertex-ai-billing-switch-hook.mjs
-│       └── scripts/
-│           ├── install-gcloud.mjs
-│           └── consume-credits.mjs
-│
-└── zh-TW/                                 # Traditional Chinese Skill
-    └── vertex-ai-billing-switch-skill/    # Copy this folder to ~/.gemini/skills/
+└── skills/                                # Gemini CLI Skills directory
+    ├── vertex-ai-billing-switch-en/       # English Skill
+    │   ├── SKILL.md                       # Skill definition (loaded by Gemini CLI)
+    │   ├── references/                    # On-demand reference docs
+    │   │   ├── install-gcloud.md          # Platform-specific gcloud installation
+    │   │   ├── create-project.md          # Auto-create GCP project sub-flow
+    │   │   └── deploy-hook.md             # First-time Hook deployment
+    │   ├── assets/
+    │   │   └── vertex-ai-billing-switch-hook.mjs
+    │   └── scripts/
+    │       ├── install-gcloud.mjs
+    │       └── consume-credits.mjs
+    │
+    └── vertex-ai-billing-switch-zh-tw/    # Traditional Chinese Skill
         ├── SKILL.md                       # Skill 定義（由 Gemini CLI 載入）
         ├── references/                    # 按需讀取的參考文件
         │   ├── install-gcloud.md
@@ -194,6 +195,15 @@ node en/vertex-ai-billing-switch-skill/scripts/consume-credits.mjs
 ```
 
 The script sends large Vertex AI API requests in a loop until a `402`, `BILLING_DISABLED`, or quota-exceeded error is returned, which triggers the Hook on next Gemini CLI startup.
+
+---
+
+## License
+
+MIT © 2024
+
+See [LICENSE](./LICENSE) for details.
+exceeded error is returned, which triggers the Hook on next Gemini CLI startup.
 
 ---
 

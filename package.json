@@ -1,0 +1,13 @@
+{
+  "name": "vertex-ai-billing-switch-skill",
+  "version": "1.1.0",
+  "description": "A Gemini CLI Skill that automates GCP Vertex AI authentication setup and deploys a global billing auto-switch Hook.",
+  "keywords": [
+    "gemini-cli-extension",
+    "gemini-cli-skill",
+    "gcp",
+    "vertex-ai"
+  ],
+  "author": "",
+  "license": "MIT"
+}
