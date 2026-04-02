@@ -16,9 +16,9 @@ mkdir -p {home_dir}/.gemini/hooks
 
 ## 部署帳單切換 Hook
 
-若 `{skill_dir}` 尚未設定，請先推導：
-`{skill_dir}` = `{home_dir}/.gemini/skills/vertex-ai-billing-switch-skill`
-（此為 Quick Start 說明中的標準安裝路徑。）
+將 `{skill_dir}` 解析為實際路徑（根據使用者的安裝方式）：
+- 若透過 Gemini CLI 安裝：`{home_dir}/.gemini/extensions/VertexAiBillingSwitchSkill/skills/vertex-ai-billing-switch-zh-tw`
+- 若為手動安裝：`{home_dir}/.gemini/skills/vertex-ai-billing-switch-zh-tw`
 
 使用 `run_shell_command` 將本 Skill 目錄下的 Hook 腳本複製到全域位置：
 
