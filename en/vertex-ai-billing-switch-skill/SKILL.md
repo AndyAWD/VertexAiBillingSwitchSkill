@@ -1,7 +1,7 @@
 ---
 name: vertex-ai-billing-switch-skill
 description: Set up Gemini CLI's Vertex AI authentication mode, including gcloud installation, GCP auth, project setup, API enablement, ADC login, and billing auto-switch Hook deployment. Trigger when user mentions Vertex AI, ADC, Application Default Credentials, GCP project setup, or billing quota. After loading, immediately begin the interactive workflow from Step 0.
-version: 2.2.0
+version: 1.0.0
 ---
 
 ## Your Role
