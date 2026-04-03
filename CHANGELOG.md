@@ -15,10 +15,17 @@ All notable changes to this project will be documented in this file.
 
 ### 🇹🇼 繁體中文
 
+#### 新增 (Added)
+- **多語系貢獻指南：** 在 README 中新增貢獻指南與 AI 翻譯提示詞，方便使用者擴展其他語系版本。
+
 #### 變更 (Changed)
-- **Skill 子目錄重新命名：** 將 `skills/vertex-ai-billing-switch-en` 與 `skills/vertex-ai-billing-switch-zh-tw` 重新命名為 `skills/en` 與 `skills/zh-tw`，減少 Gemini CLI skill 列表中顯示的冗餘前綴（由 `vertex-ai-billing-switch-skill:vertex-ai-billing-switch-en` 縮短為 `vertex-ai-billing-switch-skill:en`）。
-- **呼叫指令更新：** 將 SKILL.md 內所有 `/vertex-ai-billing-switch-skill` 重新執行提示更新為 `/en` 或 `/zh-tw`，與重命名後的 skill 資料夾名稱一致。
-- **路徑修正：** 修正 SKILL.md 中 `{skill_dir}` 預設值路徑，改用正確的 skill 子資料夾名稱（而非 extension 名稱）。
+- **Skill 子目錄重新命名：** 將 `skills/vertex-ai-billing-switch-en` 與 `skills/vertex-ai-billing-switch-zh-tw` 重新命名為 `skills/en` 與 `skills/zh-tw`，減少 Gemini CLI skill 列表中顯示的冗餘前綴。
+- **呼叫指令更新：** 將 SKILL.md 內所有呼叫提示更新為 `/en` 或 `/zh-tw`，與重命名後的資料夾名稱一致。
+- **路徑修正：** 修正 SKILL.md 中 `{skill_dir}` 預設值路徑，改用正確的 skill 子資料夾名稱。
+
+#### 修復 (Fixed)
+- **Hook 錯誤處理：** 增強 Hook 腳本在帳單連結失敗時的錯誤提示訊息，提供更清楚的排錯指引。
+- **文件清理：** 移除中英文版 README 中 License 章節的重複內容。
 
 ---
 
@@ -44,4 +51,4 @@ All notable changes to this project will be documented in this file.
 #### 修復 (Fixed)
 - **安裝路徑修正：** 更新了 README 中的手動安裝說明與執行指令，確保指向正確的子目錄（`skills/en` 與 `skills/zh-tw`）。
 - **Hook 部署路徑解析：** 重構了 `deploy-hook.md` 中的 `{skill_dir}` 路徑解析邏輯，讓 LLM 能夠根據使用者是透過擴充功能安裝或手動複製，動態找到正確的 Hook 腳本位置。
-- **文件清理：** 移除了繁體中文版 README 裡手動複製區塊中多餘的語言標註。
+- **文件清理：** 移除了繁體中文版 README 裡手動複製區塊中多餘的語言標註。README 裡手動複製區塊中多餘的語言標註。
