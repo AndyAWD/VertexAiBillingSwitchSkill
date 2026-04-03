@@ -194,6 +194,90 @@ VertexAiBillingSwitchSkill/
 
 ---
 
+## 貢獻新語言版本
+
+想為這個 Skill 新增你的語言版本嗎？只需要翻譯幾個 Markdown 檔案，程式碼部分直接複製即可，不需要任何工程技能。
+
+### 需要處理的檔案
+
+| 檔案 | 動作 |
+|------|------|
+| `skills/en/SKILL.md` | 翻譯 + 修改路徑 |
+| `skills/en/references/deploy-hook.md` | 翻譯 + 修改路徑 |
+| `skills/en/references/create-project.md` | 翻譯 |
+| `skills/en/references/install-gcloud.md` | 翻譯 |
+| `skills/en/assets/vertex-ai-billing-switch-hook.mjs` | 直接複製，不需修改 |
+| `skills/en/scripts/install-gcloud.mjs` | 直接複製，不需修改 |
+| `skills/en/scripts/consume-credits.mjs` | 直接複製，不需修改 |
+
+### 使用 AI 一鍵完成
+
+將以下提示詞複製給 AI，把 `[LANG_CODE]` 換成你的語系代碼（例如 `ja`），把 `【目標語言】` 換成語言名稱（例如「日文」）：
+
+````
+我想為這個 Gemini CLI Skill 新增【目標語言】翻譯版本（語系代碼：[LANG_CODE]）。
+
+## 需要翻譯的檔案
+請將以下檔案的 Markdown 內文（`---` frontmatter 區塊以下的部分）從英文翻譯為【目標語言】：
+- `skills/en/SKILL.md`
+- `skills/en/references/deploy-hook.md`
+- `skills/en/references/create-project.md`
+- `skills/en/references/install-gcloud.md`
+
+## 翻譯規則（必須遵守）
+- 所有程式碼區塊（``` 包住的內容）**不翻譯**，保持原樣
+- 所有 JSON 物件**不翻譯**，key 和 value 都不動
+- 所有變數佔位符如 `{home_dir}`、`{project_id}`、`{skill_dir}` **不翻譯**，保持原樣
+- 所有 Markdown 標題（##）、表格、格式符號**不修改**
+- 只翻譯人類可讀的說明文字、UI 字串（問題文字、選項標籤、描述、提示訊息）
+
+## 翻譯完成後，套用以下精確字串替換
+
+**在 `SKILL.md` frontmatter 中替換：**
+- `name: en` → `name: [LANG_CODE]`
+
+**在 `SKILL.md` 內文中替換以下 3 個字串：**
+1. `{home_dir}/.gemini/skills/en` → `{home_dir}/.gemini/skills/[LANG_CODE]`
+2. `/en run the skill workflow` → `/[LANG_CODE] 【翻譯後的執行指令】`
+3. `` run `/en run the skill workflow` `` → `` run `/[LANG_CODE] 【翻譯後的執行指令】` ``
+
+**在 `references/deploy-hook.md` 中替換以下 2 個字串：**
+1. `extensions/VertexAiBillingSwitchSkill/skills/en` → `extensions/VertexAiBillingSwitchSkill/skills/[LANG_CODE]`
+2. `/.gemini/skills/en` → `/.gemini/skills/[LANG_CODE]`
+
+## 不需要翻譯的檔案（直接複製）
+以下程式碼檔案**直接複製，不做任何修改**：
+- `skills/en/assets/vertex-ai-billing-switch-hook.mjs`
+- `skills/en/scripts/install-gcloud.mjs`
+- `skills/en/scripts/consume-credits.mjs`
+
+## 輸出目錄結構
+所有檔案儲存在 `skills/[LANG_CODE]/` 下，結構如下：
+```
+skills/[LANG_CODE]/
+├── SKILL.md
+├── references/
+│   ├── deploy-hook.md
+│   ├── create-project.md
+│   └── install-gcloud.md
+├── assets/
+│   └── vertex-ai-billing-switch-hook.mjs
+└── scripts/
+    ├── install-gcloud.mjs
+    └── consume-credits.mjs
+```
+
+## 完成前自我檢查
+- [ ] `SKILL.md` frontmatter 的 `name` 已改為 `[LANG_CODE]`
+- [ ] 所有翻譯後的檔案中，`skills/en` 已全部替換為 `skills/[LANG_CODE]`，沒有殘留
+- [ ] `SKILL.md` 中沒有殘留 `/en `（作為 Skill 指令的用法）
+- [ ] 所有 `.mjs` 檔案內容與 `skills/en/` 的原始檔完全相同
+````
+
+翻譯完成後，開個 Pull Request 提交 `skills/[LANG_CODE]/` 目錄即可！
+
+---
+
 ## 測試 Hook 切換機制
 
 專案內附有 `consume-credits.mjs` 腳本，可主動消耗額度以驗證自動切換機制是否正常運作：

@@ -194,6 +194,90 @@ VertexAiBillingSwitchSkill/
 
 ---
 
+## Contributing a New Language
+
+Want to add your language? You only need to translate a few Markdown files — the code files can be copied as-is. No engineering skills required.
+
+### What to do with each file
+
+| File | Action |
+|------|--------|
+| `skills/en/SKILL.md` | Translate + update paths |
+| `skills/en/references/deploy-hook.md` | Translate + update paths |
+| `skills/en/references/create-project.md` | Translate |
+| `skills/en/references/install-gcloud.md` | Translate |
+| `skills/en/assets/vertex-ai-billing-switch-hook.mjs` | Copy as-is — no changes needed |
+| `skills/en/scripts/install-gcloud.mjs` | Copy as-is — no changes needed |
+| `skills/en/scripts/consume-credits.mjs` | Copy as-is — no changes needed |
+
+### Use AI to do it in one shot
+
+Copy the prompt below to your AI. Replace `[LANG_CODE]` with your language code (e.g. `ja`) and `[TARGET_LANGUAGE]` with the language name (e.g. `Japanese`):
+
+````
+I want to add a [TARGET_LANGUAGE] translation of this Gemini CLI skill (language code: [LANG_CODE]).
+
+## Files to translate
+Translate the Markdown body (everything after the `---` frontmatter block) from English to [TARGET_LANGUAGE] for these files:
+- `skills/en/SKILL.md`
+- `skills/en/references/deploy-hook.md`
+- `skills/en/references/create-project.md`
+- `skills/en/references/install-gcloud.md`
+
+## Rules — MUST follow
+- Keep ALL code blocks (``` blocks) unchanged — do NOT translate code
+- Keep ALL JSON objects unchanged — do NOT translate keys or values
+- Keep ALL variable placeholders like `{home_dir}`, `{project_id}`, `{skill_dir}` unchanged
+- Keep ALL markdown headings (##), tables, and formatting unchanged
+- Only translate human-readable prose and UI strings (questions, labels, descriptions, and informational messages)
+
+## After translating — apply these exact string replacements
+
+In `SKILL.md` frontmatter, replace:
+- `name: en` → `name: [LANG_CODE]`
+
+In `SKILL.md` body, replace these 3 exact strings:
+1. `{home_dir}/.gemini/skills/en` → `{home_dir}/.gemini/skills/[LANG_CODE]`
+2. `/en run the skill workflow` → `/[LANG_CODE] [TRANSLATED_COMMAND]`
+3. `` run `/en run the skill workflow` `` → `` run `/[LANG_CODE] [TRANSLATED_COMMAND]` ``
+
+In `references/deploy-hook.md`, replace these 2 exact strings:
+1. `extensions/VertexAiBillingSwitchSkill/skills/en` → `extensions/VertexAiBillingSwitchSkill/skills/[LANG_CODE]`
+2. `/.gemini/skills/en` → `/.gemini/skills/[LANG_CODE]`
+
+## Files to copy WITHOUT modification
+Copy these files exactly as-is (do not translate):
+- `skills/en/assets/vertex-ai-billing-switch-hook.mjs`
+- `skills/en/scripts/install-gcloud.mjs`
+- `skills/en/scripts/consume-credits.mjs`
+
+## Output structure
+Save everything under `skills/[LANG_CODE]/` with this exact structure:
+```
+skills/[LANG_CODE]/
+├── SKILL.md
+├── references/
+│   ├── deploy-hook.md
+│   ├── create-project.md
+│   └── install-gcloud.md
+├── assets/
+│   └── vertex-ai-billing-switch-hook.mjs
+└── scripts/
+    ├── install-gcloud.mjs
+    └── consume-credits.mjs
+```
+
+## Self-check before finishing
+- [ ] `SKILL.md` frontmatter has `name: [LANG_CODE]`
+- [ ] No occurrence of `skills/en` remains in any translated file
+- [ ] No occurrence of `/en ` (as a skill command) remains in SKILL.md
+- [ ] All `.mjs` files are identical to the originals in `skills/en/`
+````
+
+Once done, open a Pull Request with the `skills/[LANG_CODE]/` directory!
+
+---
+
 ## Testing the Hook
 
 A `consume-credits.mjs` script is included to intentionally exhaust quota and verify the auto-switch mechanism works:
