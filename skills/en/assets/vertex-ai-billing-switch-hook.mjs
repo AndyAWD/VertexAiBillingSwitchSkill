@@ -270,6 +270,8 @@ async function run() {
       execSync('gcloud billing accounts list --format="json"', { encoding: 'utf8' })
     );
 
+    let linkErrorType = null;
+
     for (const accObj of billingJson) {
       const accId = accObj.name.split('/').pop();
       const displayName = accObj.displayName || 'Unnamed Account';
@@ -307,15 +309,33 @@ async function run() {
           appendFileSync(USED_FILE, `${accId}\n`);
         }
       } catch (err) {
+        const errMsg = err.stderr || err.message || '';
+        if (errMsg.includes('FAILED_PRECONDITION')) {
+          linkErrorType = 'PRECONDITION';
+        } else if (errMsg.includes('PERMISSION_DENIED')) {
+          linkErrorType = 'PERMISSION';
+        }
         log(
-          `❌ Failed to link account [${displayName}]: ${err.stderr?.slice(0, 100) || err.message}`,
+          `❌ Failed to link account [${displayName}]: ${errMsg.slice(0, 100)}`,
           '31'
         );
       }
     }
 
-    log('❌ ALERT: All accounts under your name are exhausted or cannot be linked!', '31');
-    hookOutput('❌ All accounts exhausted or cannot be linked');
+    if (linkErrorType === 'PRECONDITION') {
+      log('\n❌ ALERT: Billing Link Failed!', '31');
+      log('   Reason 1: [Project Quota Limit Reached].', '33');
+      log('   Reason 2: [No Payment Method Linked to Billing Account].', '33');
+      log('💡 Solution: Go to GCP Console (https://console.cloud.google.com/billing) to delete unused projects to free up quota, or ensure a valid credit card is linked.', '36');
+      hookOutput('❌ Billing link failed (Quota full or missing payment), check GCP Console');
+    } else if (linkErrorType === 'PERMISSION') {
+      log('\n❌ ALERT: Permission Denied!', '31');
+      log('💡 Solution: Ensure your current Google account has "Billing Account Administrator" permissions for the target account.', '36');
+      hookOutput('❌ Permission denied, cannot link billing');
+    } else {
+      log('❌ ALERT: All accounts under your name are exhausted or cannot be linked!', '31');
+      hookOutput('❌ All accounts exhausted or cannot be linked');
+    }
     process.exit(0);
   } catch (err) {
     log(`Fatal error: ${err.message}`, '31');

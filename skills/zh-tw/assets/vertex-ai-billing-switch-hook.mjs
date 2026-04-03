@@ -270,6 +270,8 @@ async function run() {
       execSync('gcloud billing accounts list --format="json"', { encoding: 'utf8' })
     );
 
+    let linkErrorType = null;
+
     for (const accObj of billingJson) {
       const accId = accObj.name.split('/').pop();
       const displayName = accObj.displayName || '未命名帳戶';
@@ -307,15 +309,33 @@ async function run() {
           appendFileSync(USED_FILE, `${accId}\n`);
         }
       } catch (err) {
+        const errMsg = err.stderr || err.message || '';
+        if (errMsg.includes('FAILED_PRECONDITION')) {
+          linkErrorType = 'PRECONDITION';
+        } else if (errMsg.includes('PERMISSION_DENIED')) {
+          linkErrorType = 'PERMISSION';
+        }
         log(
-          `❌ 無法連結帳戶 [${displayName}]: ${err.stderr?.slice(0, 100) || err.message}`,
+          `❌ 無法連結帳戶 [${displayName}]: ${errMsg.slice(0, 100)}`,
           '31'
         );
       }
     }
 
-    log('❌ 警報：名下所有帳戶皆已耗盡或無法連結！', '31');
-    hookOutput('❌ 所有帳戶皆已耗盡或無法連結');
+    if (linkErrorType === 'PRECONDITION') {
+      log('\n❌ 警報：無法連結帳單！', '31');
+      log('   可能原因 1：【專案數量已達配額上限】。', '33');
+      log('   可能原因 2：【該帳單未綁定付款方式】。', '33');
+      log('💡 解決方法：請前往 GCP 控制台 (https://console.cloud.google.com/billing) 刪除不用的專案以釋放配額，或確認帳單已綁定有效信用卡。', '36');
+      hookOutput('❌ 帳單連結失敗 (配額滿或缺付款方式)，請至 GCP 檢查');
+    } else if (linkErrorType === 'PERMISSION') {
+      log('\n❌ 警報：權限不足，無法連結帳單！', '31');
+      log('💡 解決方法：請確認您目前登入的 Google 帳號擁有該帳單的「結算帳戶管理員」權限。', '36');
+      hookOutput('❌ 權限不足，無法連結帳單');
+    } else {
+      log('❌ 警報：名下所有帳戶皆已耗盡或無法連結！', '31');
+      hookOutput('❌ 所有帳戶皆已耗盡或無法連結');
+    }
     process.exit(0);
   } catch (err) {
     log(`致命錯誤: ${err.message}`, '31');
