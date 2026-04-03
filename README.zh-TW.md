@@ -295,12 +295,3 @@ node skills/zh-tw/scripts/consume-credits.mjs
 MIT © 2024
 
 詳見 [LICENSE](./LICENSE) 檔案。
-�誤為止。下次啟動 Gemini CLI 時，Hook 即會自動觸發帳戶切換。
-
----
-
-## 授權條款
-
-MIT © 2024
-
-詳見 [LICENSE](./LICENSE) 檔案。

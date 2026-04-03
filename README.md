@@ -295,12 +295,3 @@ The script sends large Vertex AI API requests in a loop until a `402`, `BILLING_
 MIT © 2024
 
 See [LICENSE](./LICENSE) for details.
-exceeded error is returned, which triggers the Hook on next Gemini CLI startup.
-
----
-
-## License
-
-MIT © 2024
-
-See [LICENSE](./LICENSE) for details.
