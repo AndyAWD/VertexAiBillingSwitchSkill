@@ -1,5 +1,5 @@
 ---
-name: vertex-ai-billing-switch-zh-tw
+name: zh-tw
 description: 設定 Gemini CLI 的 Vertex AI 認證模式，包括 gcloud 安裝、GCP 認證、專案設定、API 啟用、ADC 登入，以及帳單自動切換 Hook 部署。當使用者提到 Vertex AI、ADC、應用程式預設憑證、GCP 專案設定、帳單額度等關鍵字時觸發。載入後立即從 Step 0 開始執行。
 version: 1.1.0
 ---
@@ -32,7 +32,7 @@ version: 1.1.0
 ## 使用方式
 
 ```
-/vertex-ai-billing-switch-skill 執行這個 Skill 的流程
+/zh-tw 執行這個 Skill 的流程
 ```
 
 不接受其他參數傳入。專案 ID 會在執行過程中透過互動式問答取得。
@@ -119,7 +119,7 @@ Step 1: 環境偵測（靜默檢查）
 
 **選「再想想」** → 顯示以下訊息後立即終止流程：
 
-> 已中止。請確認你的 Google Cloud 帳號未綁定任何付款方式後，重新執行 `/vertex-ai-billing-switch-skill 執行這個 Skill 的流程`。
+> 已中止。請確認你的 Google Cloud 帳號未綁定任何付款方式後，重新執行 `/zh-tw 執行這個 Skill 的流程`。
 
 ---
 
@@ -233,7 +233,7 @@ test -f {home_dir}/.gemini/hooks/vertex-ai-billing-switch-hook.mjs && echo "OK" 
 node -e "process.stdout.write(require('os').homedir())"
 ```
 
-儲存為 `{home_dir}`，並推導：`{skill_dir}` = `{home_dir}/.gemini/skills/vertex-ai-billing-switch-skill`
+儲存為 `{home_dir}`，並推導：`{skill_dir}` = `{home_dir}/.gemini/skills/zh-tw`
 
 同時設定預設值：`{gcloud_cmd}` = `gcloud`（若 Windows 安裝後 PATH 未更新，此值將在 Step 2 末尾被覆寫為完整路徑）
 
@@ -285,7 +285,7 @@ gcloud --version
 **選「我自己安裝」** → 顯示以下訊息後結束流程：
 
 > 請前往 https://cloud.google.com/sdk/docs/install 安裝 Google Cloud CLI。
-> 安裝完成後，請重新執行 `/vertex-ai-billing-switch-skill 執行這個 Skill 的流程`。
+> 安裝完成後，請重新執行 `/zh-tw 執行這個 Skill 的流程`。
 
 **選「自動安裝」** → 先偵測作業系統平台：
 
@@ -493,7 +493,7 @@ powershell -Command "& '{gcloud_cmd}' auth login"
 > 3. 在 API Keys 頁面，點擊右上方的 Create API key 依照設定建立 Key
 > 4. 在 API Keys 頁面，找到 **Project** 欄位，複製開頭為 `gen-lang-client-` 的 GCP 專案 ID
 > 5. 在 API Keys 頁面，找到 **Billing Tier** 欄位，設定活動的 **$5 美元**抵免額方案
-> 6. 完成後，請重新執行 `/vertex-ai-billing-switch-skill 執行這個 Skill 的流程`
+> 6. 完成後，請重新執行 `/zh-tw 執行這個 Skill 的流程`
 
 #### 選「自動建立（gcloud）」→ 執行以下子流程：
 
@@ -515,7 +515,7 @@ powershell -Command "& '{gcloud_cmd}' billing accounts list --format=json"
 
 - **無可用帳戶** → 顯示以下訊息後結束流程：
 
-  > 未偵測到任何可用的帳單帳戶。請先前往 [Google AI Studio](https://aistudio.google.com) 設定 **$5 美元**抵免額方案後，重新執行 `/vertex-ai-billing-switch-skill 執行這個 Skill 的流程`。
+  > 未偵測到任何可用的帳單帳戶。請先前往 [Google AI Studio](https://aistudio.google.com) 設定 **$5 美元**抵免額方案後，重新執行 `/zh-tw 執行這個 Skill 的流程`。
 
 - **有一個可用帳戶** → 記錄該帳戶，繼續 4-B
 
@@ -631,7 +631,7 @@ powershell -Command "& '{gcloud_cmd}' auth application-default login --project={
    node -e "process.stdout.write(require('os').homedir())"
    ```
 
-   將輸出結果儲存為 `{home_dir}`。若尚未設定（例如快速切換跳過了 Step 2），一併推導：`{skill_dir}` = `{home_dir}/.gemini/skills/vertex-ai-billing-switch-skill`
+   將輸出結果儲存為 `{home_dir}`。若尚未設定（例如快速切換跳過了 Step 2），一併推導：`{skill_dir}` = `{home_dir}/.gemini/skills/zh-tw`
 
 2. 使用 `read_file` 讀取 `{home_dir}/.gemini/.env`（若檔案不存在則從空內容開始）
 3. 移除既有的 `GOOGLE_CLOUD_PROJECT=` 和 `GOOGLE_CLOUD_LOCATION=` 行

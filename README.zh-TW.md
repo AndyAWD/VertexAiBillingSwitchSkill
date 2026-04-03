@@ -1,6 +1,6 @@
 # Vertex AI Billing Switch for Gemini CLI
 
-[![版本](https://img.shields.io/badge/版本-1.1.1-blue.svg)](./skills/vertex-ai-billing-switch-zh-tw/SKILL.md)
+[![版本](https://img.shields.io/badge/版本-1.1.1-blue.svg)](./skills/zh-tw/SKILL.md)
 [![授權條款: MIT](https://img.shields.io/badge/授權條款-MIT-yellow.svg)](./LICENSE)
 [![平台](https://img.shields.io/badge/平台-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)]()
 
@@ -59,18 +59,18 @@
 
    *Windows (PowerShell)*:
    ```powershell
-   Copy-Item -Path "skills\vertex-ai-billing-switch-zh-tw" -Destination "$env:USERPROFILE\.gemini\skills\" -Recurse -Force
+   Copy-Item -Path "skills\zh-tw" -Destination "$env:USERPROFILE\.gemini\skills\" -Recurse -Force
    ```
 
    *macOS / Linux*:
    ```bash
-   cp -r skills/vertex-ai-billing-switch-zh-tw ~/.gemini/skills/
+   cp -r skills/zh-tw ~/.gemini/skills/
    ```
 
 2. 在 Gemini CLI 中執行：
 
    ```
-   /vertex-ai-billing-switch-zh-tw 執行這個 Skill 的流程
+   /zh-tw 執行這個 Skill 的流程
    ```
 
 3. 依照互動式提示操作——Skill 會自動處理所有設定。
@@ -87,7 +87,7 @@
 ### 設定精靈
 
 ```
-/vertex-ai-billing-switch-zh-tw 執行這個 Skill 的流程
+/zh-tw 執行這個 Skill 的流程
         │
         ▼
   Step 0 ── 免責宣告確認
@@ -167,7 +167,7 @@ VertexAiBillingSwitchSkill/
 ├── gemini-extension.json                  # Gemini CLI extension manifest
 │
 └── skills/                                # Gemini CLI Skills 目錄
-    ├── vertex-ai-billing-switch-en/       # 英文版 Skill
+    ├── en/       # 英文版 Skill
     │   ├── SKILL.md                       # Skill 定義（由 Gemini CLI 載入）
     │   ├── references/                    # 按需讀取的參考文件
     │   │   ├── install-gcloud.md          # 各平台 gcloud 安裝指令
@@ -179,7 +179,7 @@ VertexAiBillingSwitchSkill/
     │       ├── install-gcloud.mjs
     │       └── consume-credits.mjs
     │
-    └── vertex-ai-billing-switch-zh-tw/    # 繁體中文版 Skill
+    └── zh-tw/    # 繁體中文版 Skill
         ├── SKILL.md                       # Skill 定義（由 Gemini CLI 載入）
         ├── references/                    # 按需讀取的參考文件
         │   ├── install-gcloud.md
@@ -199,7 +199,7 @@ VertexAiBillingSwitchSkill/
 專案內附有 `consume-credits.mjs` 腳本，可主動消耗額度以驗證自動切換機制是否正常運作：
 
 ```bash
-node skills/vertex-ai-billing-switch-zh-tw/scripts/consume-credits.mjs
+node skills/zh-tw/scripts/consume-credits.mjs
 ```
 
 腳本會循環發送大型 Vertex AI API 請求，直到收到 `402`、`BILLING_DISABLED` 或配額超出錯誤為止。下次啟動 Gemini CLI 時，Hook 即會自動觸發帳戶切換。

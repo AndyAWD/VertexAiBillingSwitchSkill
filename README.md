@@ -1,6 +1,6 @@
 # Vertex AI Billing Switch for Gemini CLI
 
-[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](./skills/vertex-ai-billing-switch-en/SKILL.md)
+[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](./skills/en/SKILL.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)]()
 
@@ -59,18 +59,18 @@ A **Gemini CLI Skill** that automates GCP Vertex AI authentication setup and dep
 
    *Windows (PowerShell)*:
    ```powershell
-   Copy-Item -Path "skills\vertex-ai-billing-switch-en" -Destination "$env:USERPROFILE\.gemini\skills\" -Recurse -Force
+   Copy-Item -Path "skills\en" -Destination "$env:USERPROFILE\.gemini\skills\" -Recurse -Force
    ```
 
    *macOS / Linux*:
    ```bash
-   cp -r skills/vertex-ai-billing-switch-en ~/.gemini/skills/
+   cp -r skills/en ~/.gemini/skills/
    ```
 
 2. In Gemini CLI, run:
 
    ```
-   /vertex-ai-billing-switch-en run the skill workflow
+   /en run the skill workflow
    ```
 
 3. Follow the interactive prompts — the skill will handle everything automatically.
@@ -87,7 +87,7 @@ A **Gemini CLI Skill** that automates GCP Vertex AI authentication setup and dep
 ### Setup Wizard
 
 ```
-/vertex-ai-billing-switch-en run the skill workflow
+/en run the skill workflow
         │
         ▼
   Step 0 ── Disclaimer confirmation
@@ -167,7 +167,7 @@ VertexAiBillingSwitchSkill/
 ├── gemini-extension.json                  # Gemini CLI extension manifest
 │
 └── skills/                                # Gemini CLI Skills directory
-    ├── vertex-ai-billing-switch-en/       # English Skill
+    ├── en/       # English Skill
     │   ├── SKILL.md                       # Skill definition (loaded by Gemini CLI)
     │   ├── references/                    # On-demand reference docs
     │   │   ├── install-gcloud.md          # Platform-specific gcloud installation
@@ -179,7 +179,7 @@ VertexAiBillingSwitchSkill/
     │       ├── install-gcloud.mjs
     │       └── consume-credits.mjs
     │
-    └── vertex-ai-billing-switch-zh-tw/    # Traditional Chinese Skill
+    └── zh-tw/    # Traditional Chinese Skill
         ├── SKILL.md                       # Skill 定義（由 Gemini CLI 載入）
         ├── references/                    # 按需讀取的參考文件
         │   ├── install-gcloud.md
@@ -199,7 +199,7 @@ VertexAiBillingSwitchSkill/
 A `consume-credits.mjs` script is included to intentionally exhaust quota and verify the auto-switch mechanism works:
 
 ```bash
-node skills/vertex-ai-billing-switch-en/scripts/consume-credits.mjs
+node skills/en/scripts/consume-credits.mjs
 ```
 
 The script sends large Vertex AI API requests in a loop until a `402`, `BILLING_DISABLED`, or quota-exceeded error is returned, which triggers the Hook on next Gemini CLI startup.

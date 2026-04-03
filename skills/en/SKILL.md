@@ -1,5 +1,5 @@
 ---
-name: vertex-ai-billing-switch-en
+name: en
 description: Set up Gemini CLI's Vertex AI authentication mode, including gcloud installation, GCP auth, project setup, API enablement, ADC login, and billing auto-switch Hook deployment. Trigger when user mentions Vertex AI, ADC, Application Default Credentials, GCP project setup, or billing quota. After loading, immediately begin the interactive workflow from Step 0.
 version: 1.1.0
 ---
@@ -32,7 +32,7 @@ Automatically set up Gemini CLI's Vertex AI authentication mode and deploy a glo
 ## Usage
 
 ```
-/vertex-ai-billing-switch-skill run the skill workflow
+/en run the skill workflow
 ```
 
 No other arguments accepted. The Project ID will be collected interactively during execution.
@@ -119,7 +119,7 @@ Use `ask_user`:
 
 **"Let me reconsider"** → Display the following message and immediately abort:
 
-> Aborted. Please confirm your Google Cloud account has no payment method attached, then run `/vertex-ai-billing-switch-skill run the skill workflow` again.
+> Aborted. Please confirm your Google Cloud account has no payment method attached, then run `/en run the skill workflow` again.
 
 ---
 
@@ -233,7 +233,7 @@ Use `run_shell_command` to get the home directory:
 node -e "process.stdout.write(require('os').homedir())"
 ```
 
-Store as `{home_dir}`. Derive: `{skill_dir}` = `{home_dir}/.gemini/skills/vertex-ai-billing-switch-skill`
+Store as `{home_dir}`. Derive: `{skill_dir}` = `{home_dir}/.gemini/skills/en`
 
 Also set the default: `{gcloud_cmd}` = `gcloud` (if Windows installation leaves PATH not updated, this will be overwritten with the full path at the end of Step 2)
 
@@ -285,7 +285,7 @@ Use `ask_user`:
 **"I'll install it"** → Display the following message and end the flow:
 
 > Please visit https://cloud.google.com/sdk/docs/install to install Google Cloud CLI.
-> Once installed, run `/vertex-ai-billing-switch-skill run the skill workflow` again.
+> Once installed, run `/en run the skill workflow` again.
 
 **"Auto install"** → First detect the operating system platform:
 
@@ -493,7 +493,7 @@ Use `ask_user`:
 > 3. On the API Keys page, click **Create API key** in the top-right corner and follow the prompts to create a key
 > 4. On the API Keys page, find the **Project** field and copy the GCP Project ID that starts with `gen-lang-client-`
 > 5. On the API Keys page, find the **Billing Tier** field and set up an active **$5** credit plan
-> 6. Once done, run `/vertex-ai-billing-switch-skill run the skill workflow` again
+> 6. Once done, run `/en run the skill workflow` again
 
 #### "Auto-create (gcloud)" → Execute the following sub-flow:
 
@@ -515,7 +515,7 @@ Filter accounts where `open === true`.
 
 - **No available accounts** → Display the following message and end the flow:
 
-  > No available billing accounts detected. Please go to [Google AI Studio](https://aistudio.google.com) to set up the **$5** credit plan first, then run `/vertex-ai-billing-switch-skill run the skill workflow` again.
+  > No available billing accounts detected. Please go to [Google AI Studio](https://aistudio.google.com) to set up the **$5** credit plan first, then run `/en run the skill workflow` again.
 
 - **One available account** → Record the account, continue to 4-B
 
@@ -631,7 +631,7 @@ powershell -Command "& '{gcloud_cmd}' auth application-default login --project={
    node -e "process.stdout.write(require('os').homedir())"
    ```
 
-   Store the output as `{home_dir}`. If not already set (e.g., quick switch skipped Step 2), also derive: `{skill_dir}` = `{home_dir}/.gemini/skills/vertex-ai-billing-switch-skill`
+   Store the output as `{home_dir}`. If not already set (e.g., quick switch skipped Step 2), also derive: `{skill_dir}` = `{home_dir}/.gemini/skills/en`
 
 2. Use `read_file` to read `{home_dir}/.gemini/.env` (start with empty content if file doesn't exist)
 3. Remove existing `GOOGLE_CLOUD_PROJECT=` and `GOOGLE_CLOUD_LOCATION=` lines

@@ -17,8 +17,8 @@ mkdir -p {home_dir}/.gemini/hooks
 ## Deploy Billing Switch Hook
 
 Resolve `{skill_dir}` based on how the user installed the extension:
-- If installed via Gemini CLI: `{home_dir}/.gemini/extensions/VertexAiBillingSwitchSkill/skills/vertex-ai-billing-switch-en`
-- If manually installed: `{home_dir}/.gemini/skills/vertex-ai-billing-switch-en`
+- If installed via Gemini CLI: `{home_dir}/.gemini/extensions/VertexAiBillingSwitchSkill/skills/en`
+- If manually installed: `{home_dir}/.gemini/skills/en`
 
 Use `run_shell_command` to copy the Hook script from this Skill's directory to the global location:
 
