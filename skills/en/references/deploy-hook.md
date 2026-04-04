@@ -60,7 +60,9 @@ cp {skill_dir}/assets/vertex-ai-billing-switch-hook.mjs {home_dir}/.gemini/hooks
 
 **Merge rules:**
 - Set `security.auth.selectedType` to `"vertex-ai"` (only this value — do not touch any other parameters)
-- If `hooks.SessionStart` already exists, check if there's a hook with `name === "vertex-ai-billing-switch-hook"`
+- If `hooks.SessionStart` already exists:
+  - **Compatibility Fix**: First check if the array contains any plain string elements (legacy format). If so, you MUST convert them into standard objects before proceeding: `{ "matcher": "*", "hooks": [ { "type": "command", "command": "<the_string>" } ] }` to prevent schema validation crashes.
+  - Then check if there's a hook with `name === "vertex-ai-billing-switch-hook"`
 - If exists → Do not add duplicate
 - If not → Push the new matcher object to the `SessionStart` array
 - **DO NOT modify** `model.name` (user will choose via `/model`)

@@ -60,7 +60,8 @@ cp {skill_dir}/assets/vertex-ai-billing-switch-hook.mjs {home_dir}/.gemini/hooks
 
 **合併規則：**
 - 將 `security.auth.selectedType` 設為 `"vertex-ai"`（僅修改此值，不動其他任何參數）
-- 若 `hooks.SessionStart` 已存在，檢查是否已有 `name === "vertex-ai-billing-switch-hook"` 的 hook
+- 若 `hooks.SessionStart` 已存在，請先執行**相容性修復**：檢查陣列內是否包含舊版「純字串」格式的 hook。若有，請務必先將這些字串轉換為標準物件格式 `{ "matcher": "*", "hooks": [ { "type": "command", "command": "<該字串>" } ] }`，以避免 CLI 發生驗證崩潰。
+- 接著檢查是否已有 `name === "vertex-ai-billing-switch-hook"` 的 hook
 - 若已有 → 不重複新增
 - 若沒有 → 將新的 matcher 物件 push 到 `SessionStart` 陣列
 - **不修改** `model.name`（使用者自行用 `/model` 選擇）
