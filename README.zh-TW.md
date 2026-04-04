@@ -49,31 +49,21 @@
 
 1. **安裝 Skill：**
 
-   **方法 A：使用 Gemini CLI 安裝（推薦）**
    ```bash
    gemini extensions install https://github.com/AndyAWD/VertexAiBillingSwitchSkill
    ```
 
-   **方法 B：手動安裝**
-   將 Skill 目錄複製到 Gemini CLI 的 skills 資料夾：
+2. **更新 Skill：**
 
-   *Windows (PowerShell)*:
-   ```powershell
-   Copy-Item -Path "skills\zh-tw" -Destination "$env:USERPROFILE\.gemini\skills\" -Recurse -Force
-   ```
-
-   *macOS / Linux*:
    ```bash
-   cp -r skills/zh-tw ~/.gemini/skills/
+   gemini extensions update vertex-ai-billing-switch-skill
    ```
 
-2. 在 Gemini CLI 中執行：
+3. **執行 Skill：**
 
    ```
-   /zh-tw 執行這個 Skill 的流程
+   /vertex-ai-billing-switch-skill:zh-tw 執行這個 Skill 的流程
    ```
-
-3. 依照互動式提示操作——Skill 會自動處理所有設定。
 
 4. 設定完成後：
    - 輸入 `/quit` 離開 Gemini CLI

@@ -49,31 +49,21 @@ A **Gemini CLI Skill** that automates GCP Vertex AI authentication setup and dep
 
 1. **Install the Skill:**
 
-   **Method A: Install via Gemini CLI (Recommended)**
    ```bash
    gemini extensions install https://github.com/AndyAWD/VertexAiBillingSwitchSkill
    ```
 
-   **Method B: Manual Installation**
-   Copy the Skill directory to your Gemini CLI skills folder:
+2. **Update the Skill:**
 
-   *Windows (PowerShell)*:
-   ```powershell
-   Copy-Item -Path "skills\en" -Destination "$env:USERPROFILE\.gemini\skills\" -Recurse -Force
-   ```
-
-   *macOS / Linux*:
    ```bash
-   cp -r skills/en ~/.gemini/skills/
+   gemini extensions update vertex-ai-billing-switch-skill
    ```
 
-2. In Gemini CLI, run:
+3. **Run the Skill:**
 
    ```
-   /en run the skill workflow
+   /vertex-ai-billing-switch-skill:en run the skill workflow
    ```
-
-3. Follow the interactive prompts — the skill will handle everything automatically.
 
 4. After setup completes:
    - Type `/quit` to exit Gemini CLI
