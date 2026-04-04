@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2026-04-05
+
+### 🇺🇸 English
+
+#### Added
+- **Update Command:** Added instructions for updating the extension via `gemini extensions update` in the Quick Start section.
+
+#### Changed
+- **Documentation Alignment:** Realigned the Quick Start section format in README.md to match the simplified Traditional Chinese version for better consistency.
+
+---
+
+### 🇹🇼 繁體中文
+
+#### 新增 (Added)
+- **更新指令：** 在「快速開始」區段中新增了透過 `gemini extensions update` 更新擴充功能的指令與說明。
+
+#### 變更 (Changed)
+- **格式優化：** 重新調整 README.zh-TW.md 的「快速開始」區段格式為直覺的四步驟編號清單，並同步更新至英文版文件以保持一致性。
+
+---
+
 ## [1.1.2] - 2026-04-04
 
 ### 🇺🇸 English
