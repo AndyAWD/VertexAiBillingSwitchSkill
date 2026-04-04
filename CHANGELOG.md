@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2] - 2026-04-05
+
+### 🇺🇸 English
+
+#### Fixed
+- **Hook Deployment:** Updated instruction to auto-upgrade legacy string-based hook configurations to the current object-based format to prevent schema validation crashes on macOS.
+
+---
+
+### 🇹🇼 繁體中文
+
+#### 修復 (Fixed)
+- **Hook 部署：** 更新說明，自動將舊版字串格式的 Hook 設定升級為目前的物件格式，防止在 macOS 上發生 Schema 驗證崩潰。
+
+---
+
 ## [1.2.1] - 2026-04-05
 
 ### 🇺🇸 English
