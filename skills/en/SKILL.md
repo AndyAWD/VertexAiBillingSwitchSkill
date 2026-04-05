@@ -97,25 +97,7 @@ Step 1: Environment detection (silent checks)
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "Please confirm that the Google Cloud account you will log in to later does not have any credit cards or other payment methods attached. We are not responsible for any charges incurred if a payment method is attached.",
-      "header": "Disclaimer",
-      "type": "choice",
-      "options": [
-        {
-          "label": "I understand",
-          "description": "I confirm no payment method is attached. Continue."
-        },
-        {
-          "label": "Let me reconsider",
-          "description": "I need to verify first. Abort for now."
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"Please confirm that the Google Cloud account you will log in to later does not have any credit cards or other payment methods attached. We are not responsible for any charges incurred if a payment method is attached.","header":"Disclaimer","type":"choice","options":[{"label":"I understand","description":"I confirm no payment method is attached. Continue."},{"label":"Let me reconsider","description":"I need to verify first. Abort for now."}]}]}
 ```
 
 ### Handling logic
@@ -171,25 +153,7 @@ test -f {home_dir}/.gemini/hooks/vertex-ai-billing-switch-hook.mjs && echo "OK" 
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "Detected that the environment is already set up. What would you like to do?",
-      "header": "Mode",
-      "type": "choice",
-      "options": [
-        {
-          "label": "Switch project/account",
-          "description": "Change GCP project or Google account (skip installation steps)"
-        },
-        {
-          "label": "Full reset",
-          "description": "Run the complete setup flow from scratch"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"Detected that the environment is already set up. What would you like to do?","header":"Mode","type":"choice","options":[{"label":"Switch project/account","description":"Change GCP project or Google account (skip installation steps)"},{"label":"Full reset","description":"Run the complete setup flow from scratch"}]}]}
 ```
 
 - **"Full reset"** → Continue to **Step 2** (full flow)
@@ -200,25 +164,7 @@ Use `ask_user`:
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "Are you switching to a different Google account, or just changing the GCP project under the same account?",
-      "header": "Account Switch",
-      "type": "choice",
-      "options": [
-        {
-          "label": "Same account",
-          "description": "Keep current Google login, only change the GCP project"
-        },
-        {
-          "label": "Switch account",
-          "description": "Log in to a different Google account (browser will open)"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"Are you switching to a different Google account, or just changing the GCP project under the same account?","header":"Account Switch","type":"choice","options":[{"label":"Same account","description":"Keep current Google login, only change the GCP project"},{"label":"Switch account","description":"Log in to a different Google account (browser will open)"}]}]}
 ```
 
   - **"Same account"** → Skip to **Step 4** (no re-authentication needed)
@@ -231,25 +177,7 @@ Use `ask_user`:
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "gcloud is installed and authenticated, but the billing switch Hook is not deployed. What would you like to do?",
-      "header": "Mode",
-      "type": "choice",
-      "options": [
-        {
-          "label": "Deploy Hook only",
-          "description": "Use existing Vertex AI configuration and deploy only the billing switch Hook"
-        },
-        {
-          "label": "Full setup",
-          "description": "Run the complete setup flow from scratch"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"gcloud is installed and authenticated, but the billing switch Hook is not deployed. What would you like to do?","header":"Mode","type":"choice","options":[{"label":"Deploy Hook only","description":"Use existing Vertex AI configuration and deploy only the billing switch Hook"},{"label":"Full setup","description":"Run the complete setup flow from scratch"}]}]}
 ```
 
 - **"Deploy Hook only"** → Set `hook_only = true`, proceed to **Step H**
@@ -297,29 +225,7 @@ Store as `{detected_project}` (if empty or `(unset)`, label as "not set").
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "The billing switch Hook needs to know which GCP project to monitor. Which project would you like to use?",
-      "header": "GCP Project",
-      "type": "choice",
-      "options": [
-        {
-          "label": "Use current project",
-          "description": "Use gcloud's current default project: {detected_project}"
-        },
-        {
-          "label": "Specify another project",
-          "description": "Enter an existing GCP project ID"
-        },
-        {
-          "label": "Create new project",
-          "description": "Let the Skill automatically create a new GCP project"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"The billing switch Hook needs to know which GCP project to monitor. Which project would you like to use?","header":"GCP Project","type":"choice","options":[{"label":"Use current project","description":"Use gcloud's current default project: {detected_project}"},{"label":"Specify another project","description":"Enter an existing GCP project ID"},{"label":"Create new project","description":"Let the Skill automatically create a new GCP project"}]}]}
 ```
 
 #### "Use current project"
@@ -333,16 +239,7 @@ Set `{project_id}` = `{detected_project}`, proceed directly to **H-4 (Confirm de
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "Enter your GCP Project ID (usually starts with gen-lang-client-):",
-      "header": "Project ID",
-      "type": "text",
-      "placeholder": "gen-lang-client-0123456789"
-    }
-  ]
-}
+{"questions":[{"question":"Enter your GCP Project ID (usually starts with gen-lang-client-):","header":"Project ID","type":"text","placeholder":"gen-lang-client-0123456789"}]}
 ```
 
 Validate: if empty or clearly invalid, ask again. Store as `{project_id}`, proceed to **H-3 (Apply new project settings)**.
@@ -395,15 +292,7 @@ Proceed to **H-4 (Confirm deployment)**.
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "About to perform the following actions: 1. Copy billing switch Hook to ~/.gemini/hooks/. 2. Update settings.json and enable Hook. 3. Set authentication mode to Vertex AI. Monitoring project: {project_id}",
-      "header": "Confirm Deploy",
-      "type": "yesno"
-    }
-  ]
-}
+{"questions":[{"question":"About to perform the following actions: 1. Copy billing switch Hook to ~/.gemini/hooks/. 2. Update settings.json and enable Hook. 3. Set authentication mode to Vertex AI. Monitoring project: {project_id}","header":"Confirm Deploy","type":"yesno"}]}
 ```
 
 - **Yes** → Proceed to H-5
@@ -457,25 +346,7 @@ gcloud --version
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "Google Cloud CLI (gcloud) is not installed. It's required to connect to Vertex AI. How would you like to proceed?",
-      "header": "gcloud Setup",
-      "type": "choice",
-      "options": [
-        {
-          "label": "Auto install",
-          "description": "Automatically download and install gcloud CLI (~2-3 min)"
-        },
-        {
-          "label": "I'll install it",
-          "description": "Go to the official site to install manually"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"Google Cloud CLI (gcloud) is not installed. It's required to connect to Vertex AI. How would you like to proceed?","header":"gcloud Setup","type":"choice","options":[{"label":"Auto install","description":"Automatically download and install gcloud CLI (~2-3 min)"},{"label":"I'll install it","description":"Go to the official site to install manually"}]}]}
 ```
 
 ### Handling logic
@@ -504,25 +375,7 @@ Branch based on the platform result:
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "There are two ways to install gcloud CLI on Windows. Which one would you like?",
-      "header": "Install method",
-      "type": "choice",
-      "options": [
-        {
-          "label": "winget install",
-          "description": "Run winget install -e --id Google.CloudSDK"
-        },
-        {
-          "label": "Google official",
-          "description": "Run PowerShell to download the official installer"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"There are two ways to install gcloud CLI on Windows. Which one would you like?","header":"Install method","type":"choice","options":[{"label":"winget install","description":"Run winget install -e --id Google.CloudSDK"},{"label":"Google official","description":"Run PowerShell to download the official installer"}]}]}
 ```
 
 **Read `references/install-gcloud.md` § Windows for detailed installation and verification commands after the user's choice.**
@@ -536,25 +389,7 @@ Use `ask_user`:
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "There are two ways to install gcloud CLI on macOS. Which one would you like?",
-      "header": "Install method",
-      "type": "choice",
-      "options": [
-        {
-          "label": "Homebrew install",
-          "description": "Run brew install --cask gcloud-cli"
-        },
-        {
-          "label": "Google official",
-          "description": "Run curl https://sdk.cloud.google.com | bash"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"There are two ways to install gcloud CLI on macOS. Which one would you like?","header":"Install method","type":"choice","options":[{"label":"Homebrew install","description":"Run brew install --cask gcloud-cli"},{"label":"Google official","description":"Run curl https://sdk.cloud.google.com | bash"}]}]}
 ```
 
 **Read `references/install-gcloud.md` § macOS for detailed installation and verification commands after the user's choice.**
@@ -623,15 +458,7 @@ powershell -Command "& '{gcloud_cmd}' auth login"
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "Do you already have a Google AI Studio GCP project?",
-      "header": "GCP Project",
-      "type": "yesno"
-    }
-  ]
-}
+{"questions":[{"question":"Do you already have a Google AI Studio GCP project?","header":"GCP Project","type":"yesno"}]}
 ```
 
 ### Handling logic
@@ -647,16 +474,7 @@ Use `ask_user`:
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "Enter your GCP Project ID (projects created via AI Studio usually start with gen-lang-client-) ⚠️ Disclaimer: Please make sure none of the billing accounts under this GCP account have a credit card attached. We are not responsible for any charges incurred.",
-      "header": "Project ID",
-      "type": "text",
-      "placeholder": "gen-lang-client-0123456789"
-    }
-  ]
-}
+{"questions":[{"question":"Enter your GCP Project ID (projects created via AI Studio usually start with gen-lang-client-) ⚠️ Disclaimer: Please make sure none of the billing accounts under this GCP account have a credit card attached. We are not responsible for any charges incurred.","header":"Project ID","type":"text","placeholder":"gen-lang-client-0123456789"}]}
 ```
 
 ### Validation
@@ -673,25 +491,7 @@ Use `ask_user`:
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "How would you like to create a GCP project?",
-      "header": "Create method",
-      "type": "choice",
-      "options": [
-        {
-          "label": "Auto-create (gcloud)",
-          "description": "Automatically create a new GCP project via gcloud CLI without leaving the terminal"
-        },
-        {
-          "label": "Manual (AI Studio)",
-          "description": "Go to Google AI Studio website to create manually, then come back"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"How would you like to create a GCP project?","header":"Create method","type":"choice","options":[{"label":"Auto-create (gcloud)","description":"Automatically create a new GCP project via gcloud CLI without leaving the terminal"},{"label":"Manual (AI Studio)","description":"Go to Google AI Studio website to create manually, then come back"}]}]}
 ```
 
 #### "Manual (AI Studio)" → Display the following setup guide, then end the flow:
@@ -736,26 +536,8 @@ Filter accounts where `open === true`.
   Use `ask_user` to let the user choose (dynamically generate choice options, use up to 4 accounts):
 
   ```json
-  {
-    "questions": [
-      {
-        "question": "Multiple billing accounts detected. Which one would you like to link to the new project?",
-        "header": "Billing",
-        "type": "choice",
-        "options": [
-          {
-            "label": "{displayName1}",
-            "description": "Account ID: {accountId1}"
-          },
-          {
-            "label": "{displayName2}",
-            "description": "Account ID: {accountId2}"
-          }
-        ]
-      }
-    ]
-  }
-  ```
+{"questions":[{"question":"Multiple billing accounts detected. Which one would you like to link to the new project?","header":"Billing","type":"choice","options":[{"label":"{displayName1}","description":"Account ID: {accountId1}"},{"label":"{displayName2}","description":"Account ID: {accountId2}"}]}]}
+```
 
 **4-B: Enter project ID base name**
 
@@ -764,16 +546,7 @@ Filter accounts where `open === true`.
 Use `ask_user`:
 
 ```json
-{
-  "questions": [
-    {
-      "question": "Enter your preferred GCP Project ID (lowercase letters, digits, hyphens only, 6-30 chars). A random suffix will be added to ensure uniqueness. Leave empty to use the default 'gemini-vertex'.",
-      "header": "Project ID",
-      "type": "text",
-      "placeholder": "gemini-vertex"
-    }
-  ]
-}
+{"questions":[{"question":"Enter your preferred GCP Project ID (lowercase letters, digits, hyphens only, 6-30 chars). A random suffix will be added to ensure uniqueness. Leave empty to use the default 'gemini-vertex'.","header":"Project ID","type":"text","placeholder":"gemini-vertex"}]}
 ```
 
 **Read `references/create-project.md` for project ID generation logic, project creation (4-C), billing account linking (4-D), and confirmation (4-E).**
@@ -782,181 +555,6 @@ Store `{project_id}` for subsequent steps. Proceed to **Step 5**.
 
 ---
 
-## Step 5: GCP Config + Gemini CLI Deployment
+## Step 5 & Step 6: Deploy & Verify
 
-### Prerequisites
-
-- Step 3: Authentication successful
-- Step 4: `{project_id}` obtained
-
-### Actions — Common (both first-time and quick switch)
-
-First, inform the user:
-
-> Setting up GCP project configuration:
-> 1. Set the default GCP project
-> 2. Enable the Vertex AI API
-> 3. Set up Application Default Credentials (ADC) — **the browser will open**, please complete the login
-
-Then use `run_shell_command` sequentially:
-
-**Set default GCP project:**
-
-If `{gcloud_cmd}` = `gcloud`:
-```bash
-gcloud config set project {project_id}
-```
-If `{gcloud_cmd}` is a full path:
-```bash
-powershell -Command "& '{gcloud_cmd}' config set project {project_id}"
-```
-
-**Enable Vertex AI API:**
-
-If `{gcloud_cmd}` = `gcloud`:
-```bash
-gcloud services enable aiplatform.googleapis.com --project={project_id}
-```
-If `{gcloud_cmd}` is a full path:
-```bash
-powershell -Command "& '{gcloud_cmd}' services enable aiplatform.googleapis.com --project={project_id}"
-```
-
-**Set up ADC:**
-
-If `{gcloud_cmd}` = `gcloud`:
-```bash
-gcloud auth application-default login --project={project_id}
-```
-If `{gcloud_cmd}` is a full path:
-```bash
-powershell -Command "& '{gcloud_cmd}' auth application-default login --project={project_id}"
-```
-
-**Update environment variables:**
-
-1. Get the absolute home directory path:
-
-   ```bash
-   node -e "process.stdout.write(require('os').homedir())"
-   ```
-
-   Store the output as `{home_dir}`. If not already set (e.g., quick switch skipped Step 2), also derive: `{skill_dir}` = `{home_dir}/.gemini/skills/en`
-
-2. Use `read_file` to read `{home_dir}/.gemini/.env` (start with empty content if file doesn't exist)
-3. Remove existing `GOOGLE_CLOUD_PROJECT=` and `GOOGLE_CLOUD_LOCATION=` lines
-4. Append:
-
-   ```
-   GOOGLE_CLOUD_PROJECT={project_id}
-   GOOGLE_CLOUD_LOCATION=global
-   ```
-
-5. Use `write_file` to write back to `{home_dir}/.gemini/.env`
-
-### Failure handling
-
-- **API enablement fails**: Likely wrong Project ID or insufficient permissions. Ask user to verify the Project ID
-- **ADC login fails — browser did not open**: If no browser window appeared, retry with `--no-launch-browser`:
-
-  If `{gcloud_cmd}` = `gcloud`:
-  ```bash
-  gcloud auth application-default login --no-launch-browser --project={project_id}
-  ```
-  If `{gcloud_cmd}` is a full path:
-  ```bash
-  powershell -Command "& '{gcloud_cmd}' auth application-default login --no-launch-browser --project={project_id}"
-  ```
-  gcloud will print a URL in the terminal. Ask the user to open it in any browser, complete sign-in, then paste the verification code back into the terminal.
-
-- **ADC login fails — other reason**: User may have cancelled the browser login. Suggest re-running this step.
-
-### Actions — First-time only (skip if `quick_switch = true`)
-
-> When `quick_switch = true`, the following actions are **skipped** because they were already deployed in a previous run.
-
-**Read `references/deploy-hook.md` for directory creation, Hook script deployment, and settings.json non-destructive merge instructions.**
-
----
-
-## Step 6: Verify + Complete
-
-### Verification items
-
-Use `run_shell_command` to check sequentially:
-
-1. **Environment variables**:
-   ```bash
-   cat {home_dir}/.gemini/.env
-   ```
-   Confirm it contains `GOOGLE_CLOUD_PROJECT={project_id}`
-
-   > When `hook_only = true`: Confirm `GOOGLE_CLOUD_PROJECT=` is present (any value is acceptable — skip strict value match if user chose "Use current project" and `.env` was not modified).
-
-2. **settings.json**:
-   ```bash
-   cat {home_dir}/.gemini/settings.json
-   ```
-   Confirm `hooks.SessionStart` contains the `vertex-ai-billing-switch-hook` hook
-
-3. **Hook file**:
-   ```bash
-   test -f {home_dir}/.gemini/hooks/vertex-ai-billing-switch-hook.mjs && echo "OK" || echo "MISSING"
-   ```
-   Confirm file exists
-
-4. **ADC credentials**:
-   ```bash
-   gcloud auth application-default print-access-token --quiet 2>/dev/null | head -c 20
-   ```
-   Confirm an access token can be obtained (only show first 20 chars for security)
-
-   > When `hook_only = true`: If token cannot be obtained, display a warning instead of failing:
-   > ⚠️ ADC credentials could not be verified. Hook has been deployed, but to confirm run `gcloud auth application-default login`.
-
-### Results
-
-**All passed (`hook_only = true`)** → Display the following summary:
-
-> ✅ **Billing switch Hook deployed!** Here's a summary:
->
-> | Item | Status |
-> |------|--------|
-> | GCP Project | `{project_id}` |
-> | Billing Switch Hook | Deployed |
-> | Hook Settings | Registered |
->
-> ---
->
-> ⚠️ **Please restart Gemini CLI for the Hook to take effect:**
->
-> 1. Type `/quit` to exit
-> 2. After restarting, the billing switch Hook will activate automatically
->
-> 🔄 The billing switch Hook will automatically check quota on every startup and switch accounts if insufficient.
-
-**All passed (`hook_only = false` or unset)** → Display the following summary:
-
-> ✅ **Vertex AI setup complete!** Here's a summary:
->
-> | Item | Status |
-> |------|--------|
-> | GCP Project | `{project_id}` |
-> | Vertex AI API | Enabled |
-> | ADC Credentials | Configured |
-> | Billing Switch Hook | Deployed |
-> | Environment Variables | Written |
-> | Authentication Mode | Set to Vertex AI |
->
-> ---
->
-> ⚠️ **Please restart Gemini CLI immediately for all settings to take effect:**
->
-> 1. Type `/quit` to exit
-> 2. After restarting, type `/model` to select your preferred model and start using
->
-> 💡 Authentication mode has been automatically set to Vertex AI — no manual switch needed. To change it later, run `/auth`.
->
-> 🔄 The billing switch Hook will automatically check quota on every startup and switch accounts if insufficient.
-
-**Any items failed** → Show specific failure reasons and remediation suggestions.
+**Please read `references/config-and-verify.md` and execute the configuration and verification instructions sequentially.**

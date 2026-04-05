@@ -97,25 +97,7 @@ Step 1: 環境偵測（靜默檢查）
 使用 `ask_user` 詢問：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "請確認您稍後登入的 Google Cloud 帳號沒有綁定任何信用卡等付款方式，如有綁定造成扣款，本工具不負責。",
-      "header": "免責宣告",
-      "type": "choice",
-      "options": [
-        {
-          "label": "我知道",
-          "description": "我確認帳號未綁定付款方式，繼續執行"
-        },
-        {
-          "label": "再想想",
-          "description": "我需要先確認，暫時中止流程"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"請確認您稍後登入的 Google Cloud 帳號沒有綁定任何信用卡等付款方式，如有綁定造成扣款，本工具不負責。","header":"免責宣告","type":"choice","options":[{"label":"我知道","description":"我確認帳號未綁定付款方式，繼續執行"},{"label":"再想想","description":"我需要先確認，暫時中止流程"}]}]}
 ```
 
 ### 處理邏輯
@@ -171,25 +153,7 @@ test -f {home_dir}/.gemini/hooks/vertex-ai-billing-switch-hook.mjs && echo "OK" 
 使用 `ask_user`：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "偵測到環境已設定完成。你想要做什麼？",
-      "header": "操作模式",
-      "type": "choice",
-      "options": [
-        {
-          "label": "切換專案/帳號",
-          "description": "更換 GCP 專案或 Google 帳號（跳過安裝步驟）"
-        },
-        {
-          "label": "完整重新設定",
-          "description": "從頭執行完整設定流程"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"偵測到環境已設定完成。你想要做什麼？","header":"操作模式","type":"choice","options":[{"label":"切換專案/帳號","description":"更換 GCP 專案或 Google 帳號（跳過安裝步驟）"},{"label":"完整重新設定","description":"從頭執行完整設定流程"}]}]}
 ```
 
 - 選「完整重新設定」→ 繼續 **Step 2**（走完整流程）
@@ -200,25 +164,7 @@ test -f {home_dir}/.gemini/hooks/vertex-ai-billing-switch-hook.mjs && echo "OK" 
 使用 `ask_user`：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "你要切換到不同的 Google 帳號，還是只更換同帳號下的 GCP 專案？",
-      "header": "帳號切換",
-      "type": "choice",
-      "options": [
-        {
-          "label": "同帳號換專案",
-          "description": "保持目前的 Google 登入，只更換 GCP 專案"
-        },
-        {
-          "label": "切換 Google 帳號",
-          "description": "登入不同的 Google 帳號（會開啟瀏覽器）"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"你要切換到不同的 Google 帳號，還是只更換同帳號下的 GCP 專案？","header":"帳號切換","type":"choice","options":[{"label":"同帳號換專案","description":"保持目前的 Google 登入，只更換 GCP 專案"},{"label":"切換 Google 帳號","description":"登入不同的 Google 帳號（會開啟瀏覽器）"}]}]}
 ```
 
   - **選「同帳號換專案」** → 跳到 **Step 4**（不需要重新認證）
@@ -231,25 +177,7 @@ test -f {home_dir}/.gemini/hooks/vertex-ai-billing-switch-hook.mjs && echo "OK" 
 使用 `ask_user`：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "已偵測到 gcloud 已安裝且已認證，但帳單切換 Hook 尚未部署。你想要做什麼？",
-      "header": "操作模式",
-      "type": "choice",
-      "options": [
-        {
-          "label": "僅部署 Hook",
-          "description": "使用現有 Vertex AI 設定，只部署帳單切換 Hook"
-        },
-        {
-          "label": "完整重新設定",
-          "description": "從頭執行完整設定流程"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"已偵測到 gcloud 已安裝且已認證，但帳單切換 Hook 尚未部署。你想要做什麼？","header":"操作模式","type":"choice","options":[{"label":"僅部署 Hook","description":"使用現有 Vertex AI 設定，只部署帳單切換 Hook"},{"label":"完整重新設定","description":"從頭執行完整設定流程"}]}]}
 ```
 
 - 選「僅部署 Hook」→ 設定 `hook_only = true`，進入 **Step H**
@@ -297,29 +225,7 @@ gcloud config get-value project
 使用 `ask_user`：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "帳單切換 Hook 需要知道要監控哪個 GCP 專案。你想要使用哪個專案？",
-      "header": "GCP 專案",
-      "type": "choice",
-      "options": [
-        {
-          "label": "使用目前專案",
-          "description": "沿用 gcloud 目前設定的專案：{detected_project}"
-        },
-        {
-          "label": "指定其他專案",
-          "description": "輸入現有的 GCP 專案 ID"
-        },
-        {
-          "label": "建立新專案",
-          "description": "由 Skill 自動建立新的 GCP 專案"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"帳單切換 Hook 需要知道要監控哪個 GCP 專案。你想要使用哪個專案？","header":"GCP 專案","type":"choice","options":[{"label":"使用目前專案","description":"沿用 gcloud 目前設定的專案：{detected_project}"},{"label":"指定其他專案","description":"輸入現有的 GCP 專案 ID"},{"label":"建立新專案","description":"由 Skill 自動建立新的 GCP 專案"}]}]}
 ```
 
 #### 選「使用目前專案」
@@ -333,16 +239,7 @@ gcloud config get-value project
 使用 `ask_user`：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "請輸入 GCP 專案 ID（通常以 gen-lang-client- 開頭）：",
-      "header": "專案 ID",
-      "type": "text",
-      "placeholder": "gen-lang-client-0123456789"
-    }
-  ]
-}
+{"questions":[{"question":"請輸入 GCP 專案 ID（通常以 gen-lang-client- 開頭）：","header":"專案 ID","type":"text","placeholder":"gen-lang-client-0123456789"}]}
 ```
 
 驗證：若為空或明顯無效則重新詢問。儲存為 `{project_id}`，進入 **H-3（套用新專案設定）**。
@@ -395,15 +292,7 @@ gcloud services enable aiplatform.googleapis.com --project={project_id}
 使用 `ask_user`：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "即將執行以下動作：1. 複製帳單切換 Hook 到 ~/.gemini/hooks/。2. 更新 settings.json 並啟用 Hook。3. 認證模式設為 Vertex AI。監控專案：{project_id}",
-      "header": "確認部署",
-      "type": "yesno"
-    }
-  ]
-}
+{"questions":[{"question":"即將執行以下動作：1. 複製帳單切換 Hook 到 ~/.gemini/hooks/。2. 更新 settings.json 並啟用 Hook。3. 認證模式設為 Vertex AI。監控專案：{project_id}","header":"確認部署","type":"yesno"}]}
 ```
 
 - **Yes** → 繼續執行 H-5
@@ -457,25 +346,7 @@ gcloud --version
 使用 `ask_user` 詢問：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "系統上尚未安裝 Google Cloud CLI (gcloud)，這是連接 Vertex AI 的必要工具。要如何處理？",
-      "header": "gcloud 安裝",
-      "type": "choice",
-      "options": [
-        {
-          "label": "自動安裝",
-          "description": "自動下載安裝 gcloud CLI（約 2-3 分鐘）"
-        },
-        {
-          "label": "我自己安裝",
-          "description": "前往官網手動安裝後再回來"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"系統上尚未安裝 Google Cloud CLI (gcloud)，這是連接 Vertex AI 的必要工具。要如何處理？","header":"gcloud 安裝","type":"choice","options":[{"label":"自動安裝","description":"自動下載安裝 gcloud CLI（約 2-3 分鐘）"},{"label":"我自己安裝","description":"前往官網手動安裝後再回來"}]}]}
 ```
 
 ### 處理邏輯
@@ -504,25 +375,7 @@ node -e "process.stdout.write(process.platform)"
 使用 `ask_user` 詢問：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "Windows 上有兩種安裝 gcloud CLI 的方式，你要用哪一種？",
-      "header": "安裝方式",
-      "type": "choice",
-      "options": [
-        {
-          "label": "winget 安裝",
-          "description": "執行 winget install -e --id Google.CloudSDK"
-        },
-        {
-          "label": "Google 官方安裝",
-          "description": "執行 PowerShell 下載官方安裝程式"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"Windows 上有兩種安裝 gcloud CLI 的方式，你要用哪一種？","header":"安裝方式","type":"choice","options":[{"label":"winget 安裝","description":"執行 winget install -e --id Google.CloudSDK"},{"label":"Google 官方安裝","description":"執行 PowerShell 下載官方安裝程式"}]}]}
 ```
 
 **請讀取 `references/install-gcloud.md` § Windows 取得使用者選擇後的詳細安裝與驗證指令。**
@@ -536,25 +389,7 @@ node -e "process.stdout.write(process.platform)"
 使用 `ask_user` 詢問：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "macOS 上有兩種安裝 gcloud CLI 的方式，你要用哪一種？",
-      "header": "安裝方式",
-      "type": "choice",
-      "options": [
-        {
-          "label": "Homebrew 安裝",
-          "description": "執行 brew install --cask gcloud-cli"
-        },
-        {
-          "label": "Google 官方安裝",
-          "description": "執行 curl https://sdk.cloud.google.com | bash"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"macOS 上有兩種安裝 gcloud CLI 的方式，你要用哪一種？","header":"安裝方式","type":"choice","options":[{"label":"Homebrew 安裝","description":"執行 brew install --cask gcloud-cli"},{"label":"Google 官方安裝","description":"執行 curl https://sdk.cloud.google.com | bash"}]}]}
 ```
 
 **請讀取 `references/install-gcloud.md` § macOS 取得使用者選擇後的詳細安裝與驗證指令。**
@@ -623,15 +458,7 @@ powershell -Command "& '{gcloud_cmd}' auth login"
 使用 `ask_user` 詢問：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "你是否已經有 Google AI Studio 的 GCP 專案？",
-      "header": "GCP 專案",
-      "type": "yesno"
-    }
-  ]
-}
+{"questions":[{"question":"你是否已經有 Google AI Studio 的 GCP 專案？","header":"GCP 專案","type":"yesno"}]}
 ```
 
 ### 處理邏輯
@@ -647,16 +474,7 @@ powershell -Command "& '{gcloud_cmd}' auth login"
 使用 `ask_user` 詢問：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "請輸入你的 GCP 專案 ID（使用 AI Studio 建立的專案通常以 gen-lang-client- 開頭）⚠️ 免責聲明：請確定這個 GCP 帳號內所有的帳單帳戶都沒有綁定信用卡，如有繳費情況概不負責。",
-      "header": "專案 ID",
-      "type": "text",
-      "placeholder": "gen-lang-client-0123456789"
-    }
-  ]
-}
+{"questions":[{"question":"請輸入你的 GCP 專案 ID（使用 AI Studio 建立的專案通常以 gen-lang-client- 開頭）⚠️ 免責聲明：請確定這個 GCP 帳號內所有的帳單帳戶都沒有綁定信用卡，如有繳費情況概不負責。","header":"專案 ID","type":"text","placeholder":"gen-lang-client-0123456789"}]}
 ```
 
 ### 驗證
@@ -673,25 +491,7 @@ powershell -Command "& '{gcloud_cmd}' auth login"
 使用 `ask_user` 詢問：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "你想要如何建立 GCP 專案？",
-      "header": "建立方式",
-      "type": "choice",
-      "options": [
-        {
-          "label": "自動建立（gcloud）",
-          "description": "使用 gcloud CLI 自動建立新 GCP 專案，不需離開終端機"
-        },
-        {
-          "label": "手動建立（AI Studio）",
-          "description": "前往 AI Studio 手動建立，完成後再回來"
-        }
-      ]
-    }
-  ]
-}
+{"questions":[{"question":"你想要如何建立 GCP 專案？","header":"建立方式","type":"choice","options":[{"label":"自動建立（gcloud）","description":"使用 gcloud CLI 自動建立新 GCP 專案，不需離開終端機"},{"label":"手動建立（AI Studio）","description":"前往 AI Studio 手動建立，完成後再回來"}]}]}
 ```
 
 #### 選「手動建立（AI Studio）」→ 顯示以下建立引導後結束流程：
@@ -736,26 +536,8 @@ powershell -Command "& '{gcloud_cmd}' billing accounts list --format=json"
   使用 `ask_user` 讓使用者選擇（動態產生 choice options，最多取前 4 個帳戶）：
 
   ```json
-  {
-    "questions": [
-      {
-        "question": "偵測到多個帳單帳戶，請選擇要連結到新專案的帳戶：",
-        "header": "帳單帳戶",
-        "type": "choice",
-        "options": [
-          {
-            "label": "{displayName1}",
-            "description": "帳戶 ID: {accountId1}"
-          },
-          {
-            "label": "{displayName2}",
-            "description": "帳戶 ID: {accountId2}"
-          }
-        ]
-      }
-    ]
-  }
-  ```
+{"questions":[{"question":"偵測到多個帳單帳戶，請選擇要連結到新專案的帳戶：","header":"帳單帳戶","type":"choice","options":[{"label":"{displayName1}","description":"帳戶 ID: {accountId1}"},{"label":"{displayName2}","description":"帳戶 ID: {accountId2}"}]}]}
+```
 
 **4-B: 輸入專案 ID 基礎名稱**
 
@@ -764,16 +546,7 @@ powershell -Command "& '{gcloud_cmd}' billing accounts list --format=json"
 使用 `ask_user`：
 
 ```json
-{
-  "questions": [
-    {
-      "question": "請輸入偏好的 GCP 專案 ID（小寫字母、數字、連字號，6-30 字元）。系統會自動加上隨機後綴確保唯一性。留空則使用預設名稱 'gemini-vertex'。",
-      "header": "專案 ID",
-      "type": "text",
-      "placeholder": "gemini-vertex"
-    }
-  ]
-}
+{"questions":[{"question":"請輸入偏好的 GCP 專案 ID（小寫字母、數字、連字號，6-30 字元）。系統會自動加上隨機後綴確保唯一性。留空則使用預設名稱 'gemini-vertex'。","header":"專案 ID","type":"text","placeholder":"gemini-vertex"}]}
 ```
 
 **請讀取 `references/create-project.md` 取得專案 ID 產生邏輯、專案建立（4-C）、帳單帳戶連結（4-D）與確認訊息（4-E）。**
@@ -782,181 +555,6 @@ powershell -Command "& '{gcloud_cmd}' billing accounts list --format=json"
 
 ---
 
-## Step 5: GCP 專案設定 + Gemini CLI 部署
+## Step 5 & Step 6: 專案設定與驗證
 
-### 前置條件
-
-- Step 3 認證成功
-- Step 4 已取得 `{project_id}`
-
-### 共同動作（首次使用者 + 快速切換都執行）
-
-先告知使用者：
-
-> 接下來會執行 GCP 專案設定：
-> 1. 設定預設 GCP 專案
-> 2. 啟用 Vertex AI API
-> 3. 設定應用程式預設憑證（ADC）— **會開啟瀏覽器**，請完成登入
-
-然後依序使用 `run_shell_command` 執行：
-
-**設定預設 GCP 專案：**
-
-若 `{gcloud_cmd}` = `gcloud`：
-```bash
-gcloud config set project {project_id}
-```
-若 `{gcloud_cmd}` 為完整路徑：
-```bash
-powershell -Command "& '{gcloud_cmd}' config set project {project_id}"
-```
-
-**啟用 Vertex AI API：**
-
-若 `{gcloud_cmd}` = `gcloud`：
-```bash
-gcloud services enable aiplatform.googleapis.com --project={project_id}
-```
-若 `{gcloud_cmd}` 為完整路徑：
-```bash
-powershell -Command "& '{gcloud_cmd}' services enable aiplatform.googleapis.com --project={project_id}"
-```
-
-**設定 ADC：**
-
-若 `{gcloud_cmd}` = `gcloud`：
-```bash
-gcloud auth application-default login --project={project_id}
-```
-若 `{gcloud_cmd}` 為完整路徑：
-```bash
-powershell -Command "& '{gcloud_cmd}' auth application-default login --project={project_id}"
-```
-
-**更新環境變數：**
-
-1. 取得使用者家目錄絕對路徑：
-
-   ```bash
-   node -e "process.stdout.write(require('os').homedir())"
-   ```
-
-   將輸出結果儲存為 `{home_dir}`。若尚未設定（例如快速切換跳過了 Step 2），一併推導：`{skill_dir}` = `{home_dir}/.gemini/skills/zh-tw`
-
-2. 使用 `read_file` 讀取 `{home_dir}/.gemini/.env`（若檔案不存在則從空內容開始）
-3. 移除既有的 `GOOGLE_CLOUD_PROJECT=` 和 `GOOGLE_CLOUD_LOCATION=` 行
-4. 追加以下內容：
-
-   ```
-   GOOGLE_CLOUD_PROJECT={project_id}
-   GOOGLE_CLOUD_LOCATION=global
-   ```
-
-5. 使用 `write_file` 寫回 `{home_dir}/.gemini/.env`
-
-### 失敗處理
-
-- **API 啟用失敗**：可能是專案 ID 錯誤或權限不足，告知使用者檢查專案 ID
-- **ADC 登入失敗 — 瀏覽器未開啟**：若沒有瀏覽器視窗彈出，使用 `--no-launch-browser` 重試：
-
-  若 `{gcloud_cmd}` = `gcloud`：
-  ```bash
-  gcloud auth application-default login --no-launch-browser --project={project_id}
-  ```
-  若 `{gcloud_cmd}` 為完整路徑：
-  ```bash
-  powershell -Command "& '{gcloud_cmd}' auth application-default login --no-launch-browser --project={project_id}"
-  ```
-  gcloud 會在終端機顯示一個 URL，請使用者複製到瀏覽器完成登入，再將驗證碼貼回終端機。
-
-- **其他 ADC 登入失敗**：可能是使用者取消了瀏覽器登入，建議重新執行此步驟。
-
-### 僅首次執行的動作（`quick_switch = true` 時跳過）
-
-> 當 `quick_switch = true` 時，以下動作**跳過**，因為先前執行已部署完成。
-
-**請讀取 `references/deploy-hook.md` 取得目錄建立、Hook 腳本部署，以及 settings.json 非破壞性合併的詳細指令。**
-
----
-
-## Step 6: 驗證 + 完成
-
-### 驗證項目
-
-使用 `run_shell_command` 依序檢查：
-
-1. **環境變數**：
-   ```bash
-   cat {home_dir}/.gemini/.env
-   ```
-   確認包含 `GOOGLE_CLOUD_PROJECT={project_id}`
-
-   > 當 `hook_only = true` 時：只確認 `GOOGLE_CLOUD_PROJECT=` 存在即可，不需要比對特定值（若使用者選「使用目前專案」，此流程未修改 `.env`）。
-
-2. **settings.json**：
-   ```bash
-   cat {home_dir}/.gemini/settings.json
-   ```
-   確認 `hooks.SessionStart` 中有 `vertex-ai-billing-switch-hook` hook
-
-3. **Hook 檔案**：
-   ```bash
-   test -f {home_dir}/.gemini/hooks/vertex-ai-billing-switch-hook.mjs && echo "OK" || echo "MISSING"
-   ```
-   確認檔案存在
-
-4. **ADC 憑證**：
-   ```bash
-   gcloud auth application-default print-access-token --quiet 2>/dev/null | head -c 20
-   ```
-   確認能取得 access token（只顯示前 20 字元以保護安全）
-
-   > 當 `hook_only = true` 時：若無法取得 token，顯示警告而非整體失敗：
-   > ⚠️ 無法驗證 ADC 憑證。Hook 已部署，但如需確認請執行 `gcloud auth application-default login`。
-
-### 驗證結果
-
-**全部通過（`hook_only = true`）** → 顯示以下摘要：
-
-> ✅ **帳單切換 Hook 部署完成！** 以下是摘要：
->
-> | 項目 | 狀態 |
-> |------|------|
-> | GCP 專案 | `{project_id}` |
-> | 帳單切換 Hook | 已部署 |
-> | Hook 設定 | 已註冊 |
->
-> ---
->
-> ⚠️ **請立即重新啟動 Gemini CLI 讓 Hook 生效：**
->
-> 1. 輸入 `/quit` 離開
-> 2. 重新啟動後，帳單切換 Hook 將自動生效
->
-> 🔄 帳單切換 Hook 會在每次啟動時自動檢查額度，不足時自動切換帳戶。
-
-**全部通過（`hook_only = false` 或未設定）** → 顯示以下摘要：
-
-> ✅ **Vertex AI 設定完成！** 以下是摘要：
->
-> | 項目 | 狀態 |
-> |------|------|
-> | GCP 專案 | `{project_id}` |
-> | Vertex AI API | 已啟用 |
-> | ADC 憑證 | 已設定 |
-> | 帳單切換 Hook | 已部署 |
-> | 環境變數 | 已寫入 |
-> | 認證模式 | 已切換為 Vertex AI |
->
-> ---
->
-> ⚠️ **請立即重新啟動 Gemini CLI 讓設定生效：**
->
-> 1. 輸入 `/quit` 離開
-> 2. 重新啟動後，輸入 `/model` 選擇模型即可開始使用
->
-> 💡 認證模式已自動設為 Vertex AI，無需手動切換。如需變更，可隨時執行 `/auth`。
->
-> 🔄 帳單切換 Hook 會在每次啟動時自動檢查額度，不足時自動切換帳戶。
-
-**有失敗項目** → 針對失敗項目顯示具體原因和修復建議。
+**請讀取 `references/config-and-verify.md` 並依序執行其中的設定與驗證指令。**
