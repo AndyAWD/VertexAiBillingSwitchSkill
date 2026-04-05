@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.1] - 2026-04-05
+
+### 🇺🇸 English
+
+#### Documentation
+- **README:** Updated translation guide to include `config-and-verify.md`.
+
+---
+
+### 🇹🇼 繁體中文
+
+#### 文件 (Documentation)
+- **README：** 更新翻譯指南以包含 `config-and-verify.md`。
+
+---
+
 ## [1.3.0] - 2026-04-05
 
 ### 🇺🇸 English
