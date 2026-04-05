@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2026-04-05
+
+### 🇺🇸 English
+
+#### Added
+- **Skill Execution:** Added "Deploy Hook Only" scenario for users with pre-configured Vertex AI credentials.
+
+#### Fixed
+- **Authentication:** Detect missing Application Default Credentials (ADC) and provide a recovery guide using `--no-launch-browser`.
+
+#### Changed
+- **Internal:** Optimized `SKILL.md` by extracting non-interactive steps and compressing JSON configurations.
+
+---
+
+### 🇹🇼 繁體中文
+
+#### 新增 (Added)
+- **技能執行：** 新增「僅部署 Hook」情境，提供已完成 Vertex AI 認證設定的使用者快速部署。
+
+#### 修復 (Fixed)
+- **驗證設定：** 偵測缺少 ADC 憑證的問題，並提供搭配 `--no-launch-browser` 的復原指引。
+
+#### 變更 (Changed)
+- **內部：** 最佳化 `SKILL.md` 結構，抽離無互動步驟並壓縮 JSON 設定以提高效率。
+
+---
+
 ## [1.2.3] - 2026-04-05
 
 ### 🇺🇸 English
