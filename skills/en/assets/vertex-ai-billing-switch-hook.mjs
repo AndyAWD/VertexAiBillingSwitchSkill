@@ -192,6 +192,26 @@ async function run() {
 
   ensureGcloudAccount();
 
+  // ADC credentials existence check
+  const adcFile = join(os.homedir(), '.config', 'gcloud', 'application_default_credentials.json');
+  if (!existsSync(adcFile)) {
+    let projectId = 'YOUR_PROJECT_ID';
+    try {
+      const p = execSync('gcloud config get-value project', { encoding: 'utf8' }).trim();
+      if (p && p !== '(unset)') projectId = p;
+    } catch (e) { /* ignore */ }
+
+    log('⚠️ ADC credentials not configured! Gemini CLI API calls will fail.', '33');
+    log('💡 Run the following in your terminal (not in Gemini CLI):', '36');
+    log(`   gcloud auth application-default login --project=${projectId}`, '36');
+    log('   If the browser cannot open automatically, use:', '36');
+    log(`   gcloud auth application-default login --no-launch-browser --project=${projectId}`, '36');
+    hookOutput(
+      `⚠️ ADC credentials not configured. Run in your terminal:\ngcloud auth application-default login --project=${projectId}\nIf browser can't open, add --no-launch-browser`
+    );
+    process.exit(0);
+  }
+
   try {
     // --- Dynamic Project Detection ---
     let targetProject = '';

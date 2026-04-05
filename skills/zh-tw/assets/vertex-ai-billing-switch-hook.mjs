@@ -192,6 +192,26 @@ async function run() {
 
   ensureGcloudAccount();
 
+  // ADC 憑證存在性檢查
+  const adcFile = join(os.homedir(), '.config', 'gcloud', 'application_default_credentials.json');
+  if (!existsSync(adcFile)) {
+    let projectId = 'YOUR_PROJECT_ID';
+    try {
+      const p = execSync('gcloud config get-value project', { encoding: 'utf8' }).trim();
+      if (p && p !== '(unset)') projectId = p;
+    } catch (e) { /* ignore */ }
+
+    log('⚠️ ADC 憑證未設定！Gemini CLI 的 API 呼叫將會失敗。', '33');
+    log('💡 請在終端機（不是 Gemini CLI）直接執行：', '36');
+    log(`   gcloud auth application-default login --project=${projectId}`, '36');
+    log('   若瀏覽器無法自動開啟，請改用：', '36');
+    log(`   gcloud auth application-default login --no-launch-browser --project=${projectId}`, '36');
+    hookOutput(
+      `⚠️ ADC 憑證未設定，請在終端機執行：\ngcloud auth application-default login --project=${projectId}\n若瀏覽器無法開啟，加上 --no-launch-browser`
+    );
+    process.exit(0);
+  }
+
   try {
     // --- 【動態專案偵測】 ---
     let targetProject = '';
