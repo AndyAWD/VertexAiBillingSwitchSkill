@@ -63,7 +63,11 @@ Step 1: Environment detection (silent checks)
   │   → Switch: ask_user(Same account / Switch account)
   │       → Same account: Step 4(project) → Step 5(config, skip Hook deploy) → Step 6(verify)
   │       → Switch account: Step 3(auth) → Step 4(project) → Step 5(config, skip Hook deploy) → Step 6(verify)
-  └─ Not ready (first-time user)
+  ├─ gcloud ready, Hook not deployed (check1 ✓ + check2 ✓ + check3 ✗)
+  │   → ask_user: Deploy Hook only / Full setup
+  │   → Deploy Hook only: → Step H → Step 6 (hook_only mode)
+  │   → Full setup: → Step 2 onward (full flow)
+  └─ gcloud not installed or not authenticated (first-time user)
       → Step 2: gcloud CLI installation
       → Step 3: GCP auth login
       → Step 4: Get/Create GCP project
@@ -79,6 +83,7 @@ Step 1: Environment detection (silent checks)
 | Returning user — Full reset | 0 → 1 → 2 → 3 → 4 → 5 → 6 |
 | Returning user — Same account, switch project | 0 → 1 → 4 → 5 (skip Hook deploy) → 6 |
 | Returning user — Switch account | 0 → 1 → 3 → 4 → 5 (skip Hook deploy) → 6 |
+| Returning user — Hook only (Vertex AI already configured) | 0 → 1 → H → 6 |
 
 ---
 
@@ -219,7 +224,200 @@ Use `ask_user`:
   - **"Same account"** → Skip to **Step 4** (no re-authentication needed)
   - **"Switch account"** → Proceed to **Step 3**
 
-**Any check fails (first-time user)** → Continue to **Step 2**
+**Checks 1 and 2 pass, check 3 fails (gcloud ready, Hook not deployed)** →
+
+**STOP — You MUST call ask_user. DO NOT assume the answer. Wait for the response before continuing.**
+
+Use `ask_user`:
+
+```json
+{
+  "questions": [
+    {
+      "question": "gcloud is installed and authenticated, but the billing switch Hook is not deployed. What would you like to do?",
+      "header": "Mode",
+      "type": "choice",
+      "options": [
+        {
+          "label": "Deploy Hook only",
+          "description": "Use existing Vertex AI configuration and deploy only the billing switch Hook"
+        },
+        {
+          "label": "Full setup",
+          "description": "Run the complete setup flow from scratch"
+        }
+      ]
+    }
+  ]
+}
+```
+
+- **"Deploy Hook only"** → Set `hook_only = true`, proceed to **Step H**
+- **"Full setup"** → Continue to **Step 2** (full flow)
+
+**Checks 1 or 2 fail (first-time user)** → Continue to **Step 2**
+
+---
+
+## Step H: Deploy Hook Only
+
+> Entry point from Step 1 when `hook_only = true`.
+> The user already has Vertex AI configured and only needs the billing switch Hook deployed.
+
+### H-1: Setup Variables
+
+Use `run_shell_command` to get the home directory:
+
+```bash
+node -e "process.stdout.write(require('os').homedir())"
+```
+
+Store as `{home_dir}` and set:
+- `{gcloud_cmd}` = `gcloud` (already verified in Step 1)
+- `{skill_dir}` based on installation method:
+  - Installed via Gemini CLI: `{home_dir}/.gemini/extensions/VertexAiBillingSwitchSkill/skills/en`
+  - Manually installed: `{home_dir}/.gemini/skills/en`
+
+Use `run_shell_command` to read the current GCP project (for display and options only):
+
+```bash
+gcloud config get-value project
+```
+
+Store as `{detected_project}` (if empty or `(unset)`, label as "not set").
+
+---
+
+### H-2: Choose GCP Project
+
+**STOP — You MUST call ask_user. DO NOT assume the answer. Wait for the response before continuing.**
+
+> If `{detected_project}` is "not set", inform the user before calling ask_user: "gcloud does not have a default project set. Consider choosing 'Specify another project' or 'Create new project'."
+
+Use `ask_user`:
+
+```json
+{
+  "questions": [
+    {
+      "question": "The billing switch Hook needs to know which GCP project to monitor. Which project would you like to use?",
+      "header": "GCP Project",
+      "type": "choice",
+      "options": [
+        {
+          "label": "Use current project",
+          "description": "Use gcloud's current default project: {detected_project}"
+        },
+        {
+          "label": "Specify another project",
+          "description": "Enter an existing GCP project ID"
+        },
+        {
+          "label": "Create new project",
+          "description": "Let the Skill automatically create a new GCP project"
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### "Use current project"
+
+Set `{project_id}` = `{detected_project}`, proceed directly to **H-4 (Confirm deployment)**.
+
+#### "Specify another project"
+
+**STOP — You MUST call ask_user. DO NOT assume the answer. Wait for the response before continuing.**
+
+Use `ask_user`:
+
+```json
+{
+  "questions": [
+    {
+      "question": "Enter your GCP Project ID (usually starts with gen-lang-client-):",
+      "header": "Project ID",
+      "type": "text",
+      "placeholder": "gen-lang-client-0123456789"
+    }
+  ]
+}
+```
+
+Validate: if empty or clearly invalid, ask again. Store as `{project_id}`, proceed to **H-3 (Apply new project settings)**.
+
+#### "Create new project"
+
+**Read `references/create-project.md` and execute the full auto-create sub-flow (4-A detect billing accounts, 4-B enter project name, 4-C create, 4-D link billing, 4-E confirm).**
+
+After obtaining `{project_id}`, proceed to **H-3 (Apply new project settings)**.
+
+---
+
+### H-3: Apply New Project Settings (only for "Specify another project" or "Create new project")
+
+Inform the user:
+
+> Switching GCP project to `{project_id}`…
+
+Execute sequentially using `run_shell_command`:
+
+**Update gcloud default project:**
+```bash
+gcloud config set project {project_id}
+```
+
+**Enable Vertex AI API:**
+```bash
+gcloud services enable aiplatform.googleapis.com --project={project_id}
+```
+
+**Update `~/.gemini/.env`:**
+
+1. Use `read_file` to read `{home_dir}/.gemini/.env` (start with empty content if file doesn't exist)
+2. Remove existing `GOOGLE_CLOUD_PROJECT=` and `GOOGLE_CLOUD_LOCATION=` lines
+3. Append:
+   ```
+   GOOGLE_CLOUD_PROJECT={project_id}
+   GOOGLE_CLOUD_LOCATION=global
+   ```
+4. Use `write_file` to write back
+
+Proceed to **H-4 (Confirm deployment)**.
+
+---
+
+### H-4: Confirm Deployment
+
+**STOP — You MUST call ask_user. DO NOT assume the answer. Wait for the response before continuing.**
+
+Use `ask_user`:
+
+```json
+{
+  "questions": [
+    {
+      "question": "About to perform the following actions: 1. Copy billing switch Hook to ~/.gemini/hooks/. 2. Update settings.json and enable Hook. 3. Set authentication mode to Vertex AI. Monitoring project: {project_id}",
+      "header": "Confirm Deploy",
+      "type": "yesno"
+    }
+  ]
+}
+```
+
+- **Yes** → Proceed to H-5
+- **No** → Display "Cancelled. To retry, trigger this Skill again." and abort
+
+---
+
+### H-5: Deploy Hook
+
+**Read `references/deploy-hook.md` and execute all deployment steps (directory creation, Hook script copy, settings.json non-destructive merge).**
+
+> Note: Ignore the precondition at the top of that file stating "execute only when `quick_switch = false`". In the `hook_only = true` route, execute all steps directly.
+
+Proceed to **Step 6** (`hook_only = true`).
 
 ---
 
@@ -693,6 +891,8 @@ Use `run_shell_command` to check sequentially:
    ```
    Confirm it contains `GOOGLE_CLOUD_PROJECT={project_id}`
 
+   > When `hook_only = true`: Confirm `GOOGLE_CLOUD_PROJECT=` is present (any value is acceptable — skip strict value match if user chose "Use current project" and `.env` was not modified).
+
 2. **settings.json**:
    ```bash
    cat {home_dir}/.gemini/settings.json
@@ -711,9 +911,31 @@ Use `run_shell_command` to check sequentially:
    ```
    Confirm an access token can be obtained (only show first 20 chars for security)
 
+   > When `hook_only = true`: If token cannot be obtained, display a warning instead of failing:
+   > ⚠️ ADC credentials could not be verified. Hook has been deployed, but to confirm run `gcloud auth application-default login`.
+
 ### Results
 
-**All passed** → Display the following summary:
+**All passed (`hook_only = true`)** → Display the following summary:
+
+> ✅ **Billing switch Hook deployed!** Here's a summary:
+>
+> | Item | Status |
+> |------|--------|
+> | GCP Project | `{project_id}` |
+> | Billing Switch Hook | Deployed |
+> | Hook Settings | Registered |
+>
+> ---
+>
+> ⚠️ **Please restart Gemini CLI for the Hook to take effect:**
+>
+> 1. Type `/quit` to exit
+> 2. After restarting, the billing switch Hook will activate automatically
+>
+> 🔄 The billing switch Hook will automatically check quota on every startup and switch accounts if insufficient.
+
+**All passed (`hook_only = false` or unset)** → Display the following summary:
 
 > ✅ **Vertex AI setup complete!** Here's a summary:
 >
