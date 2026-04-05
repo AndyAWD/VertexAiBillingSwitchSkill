@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.3] - 2026-04-05
+
+### 🇺🇸 English
+
+#### Documentation
+- **Quick Start:** Reorganized instructions to clearly distinguish between standard terminal commands and Gemini CLI commands.
+
+### 🇹🇼 Traditional Chinese
+
+#### 說明文件
+- **快速開始：** 重新組織說明內容，清楚區分一般終端機指令與 Gemini CLI 指令。
+
 ## [1.2.2] - 2026-04-05
 
 ### 🇺🇸 English
