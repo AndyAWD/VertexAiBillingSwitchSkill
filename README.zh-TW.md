@@ -47,6 +47,8 @@
 
 ## 快速開始
 
+### 在一般的終端機（或命令提示字元）中輸入：
+
 1. **安裝 Skill：**
 
    ```bash
@@ -59,13 +61,15 @@
    gemini extensions update vertex-ai-billing-switch-skill
    ```
 
-3. **執行 Skill：**
+### 在 Gemini CLI 中輸入：
+
+1. **執行 Skill：**
 
    ```
    /vertex-ai-billing-switch-skill:zh-tw 執行這個 Skill 的流程
    ```
 
-4. 設定完成後：
+2. 設定完成後：
    - 輸入 `/quit` 離開 Gemini CLI
    - **重新啟動 Gemini CLI** 後，輸入 `/auth` 切換至 **Vertex AI** 認證模式
    - 輸入 `/model` 選擇你想使用的模型

@@ -47,6 +47,8 @@ A **Gemini CLI Skill** that automates GCP Vertex AI authentication setup and dep
 
 ## Quick Start
 
+### Run in your standard terminal / command prompt:
+
 1. **Install the Skill:**
 
    ```bash
@@ -59,13 +61,15 @@ A **Gemini CLI Skill** that automates GCP Vertex AI authentication setup and dep
    gemini extensions update vertex-ai-billing-switch-skill
    ```
 
-3. **Run the Skill:**
+### Run in Gemini CLI:
+
+1. **Run the Skill:**
 
    ```
    /vertex-ai-billing-switch-skill:en run the skill workflow
    ```
 
-4. After setup completes:
+2. After setup completes:
    - Type `/quit` to exit Gemini CLI
    - **Restart Gemini CLI**, then type `/auth` to switch to **Vertex AI** authentication mode
    - Type `/model` to choose your preferred model
