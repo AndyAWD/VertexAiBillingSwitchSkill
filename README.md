@@ -164,6 +164,7 @@ VertexAiBillingSwitchSkill/
     ├── en/       # English Skill
     │   ├── SKILL.md                       # Skill definition (loaded by Gemini CLI)
     │   ├── references/                    # On-demand reference docs
+    │   │   ├── config-and-verify.md       # Config and Verification (Step 5 & 6)
     │   │   ├── install-gcloud.md          # Platform-specific gcloud installation
     │   │   ├── create-project.md          # Auto-create GCP project sub-flow
     │   │   └── deploy-hook.md             # First-time Hook deployment
@@ -176,6 +177,7 @@ VertexAiBillingSwitchSkill/
     └── zh-tw/    # Traditional Chinese Skill
         ├── SKILL.md                       # Skill 定義（由 Gemini CLI 載入）
         ├── references/                    # 按需讀取的參考文件
+        │   ├── config-and-verify.md
         │   ├── install-gcloud.md
         │   ├── create-project.md
         │   └── deploy-hook.md
@@ -197,6 +199,7 @@ Want to add your language? You only need to translate a few Markdown files — t
 | File | Action |
 |------|--------|
 | `skills/en/SKILL.md` | Translate + update paths |
+| `skills/en/references/config-and-verify.md` | Translate + update paths |
 | `skills/en/references/deploy-hook.md` | Translate + update paths |
 | `skills/en/references/create-project.md` | Translate |
 | `skills/en/references/install-gcloud.md` | Translate |
@@ -214,6 +217,7 @@ I want to add a [TARGET_LANGUAGE] translation of this Gemini CLI skill (language
 ## Files to translate
 Translate the Markdown body (everything after the `---` frontmatter block) from English to [TARGET_LANGUAGE] for these files:
 - `skills/en/SKILL.md`
+- `skills/en/references/config-and-verify.md`
 - `skills/en/references/deploy-hook.md`
 - `skills/en/references/create-project.md`
 - `skills/en/references/install-gcloud.md`
@@ -235,6 +239,9 @@ In `SKILL.md` body, replace these 3 exact strings:
 2. `/en run the skill workflow` → `/[LANG_CODE] [TRANSLATED_COMMAND]`
 3. `` run `/en run the skill workflow` `` → `` run `/[LANG_CODE] [TRANSLATED_COMMAND]` ``
 
+In `references/config-and-verify.md`, replace this exact string:
+1. `/.gemini/skills/en` → `/.gemini/skills/[LANG_CODE]`
+
 In `references/deploy-hook.md`, replace these 2 exact strings:
 1. `extensions/VertexAiBillingSwitchSkill/skills/en` → `extensions/VertexAiBillingSwitchSkill/skills/[LANG_CODE]`
 2. `/.gemini/skills/en` → `/.gemini/skills/[LANG_CODE]`
@@ -251,6 +258,7 @@ Save everything under `skills/[LANG_CODE]/` with this exact structure:
 skills/[LANG_CODE]/
 ├── SKILL.md
 ├── references/
+│   ├── config-and-verify.md
 │   ├── deploy-hook.md
 │   ├── create-project.md
 │   └── install-gcloud.md
@@ -289,3 +297,4 @@ The script sends large Vertex AI API requests in a loop until a `402`, `BILLING_
 MIT © 2024
 
 See [LICENSE](./LICENSE) for details.
+

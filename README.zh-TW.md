@@ -176,6 +176,7 @@ VertexAiBillingSwitchSkill/
     └── zh-tw/    # 繁體中文版 Skill
         ├── SKILL.md                       # Skill 定義（由 Gemini CLI 載入）
         ├── references/                    # 按需讀取的參考文件
+        │   ├── config-and-verify.md
         │   ├── install-gcloud.md
         │   ├── create-project.md
         │   └── deploy-hook.md
@@ -197,6 +198,7 @@ VertexAiBillingSwitchSkill/
 | 檔案 | 動作 |
 |------|------|
 | `skills/en/SKILL.md` | 翻譯 + 修改路徑 |
+| `skills/en/references/config-and-verify.md` | 翻譯 + 修改路徑 |
 | `skills/en/references/deploy-hook.md` | 翻譯 + 修改路徑 |
 | `skills/en/references/create-project.md` | 翻譯 |
 | `skills/en/references/install-gcloud.md` | 翻譯 |
@@ -214,6 +216,7 @@ VertexAiBillingSwitchSkill/
 ## 需要翻譯的檔案
 請將以下檔案的 Markdown 內文（`---` frontmatter 區塊以下的部分）從英文翻譯為【目標語言】：
 - `skills/en/SKILL.md`
+- `skills/en/references/config-and-verify.md`
 - `skills/en/references/deploy-hook.md`
 - `skills/en/references/create-project.md`
 - `skills/en/references/install-gcloud.md`
@@ -235,6 +238,9 @@ VertexAiBillingSwitchSkill/
 2. `/en run the skill workflow` → `/[LANG_CODE] 【翻譯後的執行指令】`
 3. `` run `/en run the skill workflow` `` → `` run `/[LANG_CODE] 【翻譯後的執行指令】` ``
 
+**在 `references/config-and-verify.md` 中替換以下 1 個字串：**
+1. `/.gemini/skills/en` → `/.gemini/skills/[LANG_CODE]`
+
 **在 `references/deploy-hook.md` 中替換以下 2 個字串：**
 1. `extensions/VertexAiBillingSwitchSkill/skills/en` → `extensions/VertexAiBillingSwitchSkill/skills/[LANG_CODE]`
 2. `/.gemini/skills/en` → `/.gemini/skills/[LANG_CODE]`
@@ -251,6 +257,7 @@ VertexAiBillingSwitchSkill/
 skills/[LANG_CODE]/
 ├── SKILL.md
 ├── references/
+│   ├── config-and-verify.md
 │   ├── deploy-hook.md
 │   ├── create-project.md
 │   └── install-gcloud.md
