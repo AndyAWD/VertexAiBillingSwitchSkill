@@ -60,6 +60,7 @@ Step 1: Environment detection (silent checks)
   ├─ All ready (returning user)
   │   → ask_user: Switch project / Full reset
   │   → Full reset: → Step 2 onward (full flow)
+  │   → Rename billing accounts: → Step R → Done
   │   → Switch: ask_user(Same account / Switch account)
   │       → Same account: Step 4(project) → Step 5(config, skip Hook deploy) → Step 6(verify)
   │       → Switch account: Step 3(auth) → Step 4(project) → Step 5(config, skip Hook deploy) → Step 6(verify)
@@ -83,6 +84,7 @@ Step 1: Environment detection (silent checks)
 | Returning user — Full reset | 0 → 1 → 2 → 3 → 4 → 5 → 6 |
 | Returning user — Same account, switch project | 0 → 1 → 4 → 5 (skip Hook deploy) → 6 |
 | Returning user — Switch account | 0 → 1 → 3 → 4 → 5 (skip Hook deploy) → 6 |
+| Returning user — Rename billing accounts | 0 → 1 → R → Done |
 | Returning user — Hook only (Vertex AI already configured) | 0 → 1 → H → 6 |
 
 ---
@@ -153,10 +155,11 @@ test -f {home_dir}/.gemini/hooks/vertex-ai-billing-switch-hook.mjs && echo "OK" 
 Use `ask_user`:
 
 ```json
-{"questions":[{"question":"Detected that the environment is already set up. What would you like to do?","header":"Mode","type":"choice","options":[{"label":"Switch project/account","description":"Change GCP project or Google account (skip installation steps)"},{"label":"Full reset","description":"Run the complete setup flow from scratch"}]}]}
+{"questions":[{"question":"Detected that the environment is already set up. What would you like to do?","header":"Mode","type":"choice","options":[{"label":"Switch project/account","description":"Change GCP project or Google account (skip installation steps)"},{"label":"Rename billing accounts","description":"Rename billing accounts for easier identification (e.g., Trial_Exp_20260501)"},{"label":"Full reset","description":"Run the complete setup flow from scratch"}]}]}
 ```
 
 - **"Full reset"** → Continue to **Step 2** (full flow)
+- **"Rename billing accounts"** → Proceed to **Step R**
 - **"Switch project/account"** → Set `quick_switch = true`, then:
 
 **STOP — You MUST call ask_user. DO NOT assume the answer. Wait for the response before continuing.**
@@ -307,6 +310,19 @@ Use `ask_user`:
 > Note: Ignore the precondition at the top of that file stating "execute only when `quick_switch = false`". In the `hook_only = true` route, execute all steps directly.
 
 Proceed to **Step 6** (`hook_only = true`).
+
+---
+
+## Step R: Rename Billing Accounts
+
+> Entry point from Step 1 when "Rename billing accounts" is selected.
+> This is a standalone flow that does not affect other steps.
+
+**Read `references/rename-accounts.md` and execute the full rename workflow (R-1 list accounts, R-2 choose strategy, R-3 collect dates, R-4 confirm, R-5 execute renames).**
+
+After completion or cancellation, the flow ends. Display:
+
+> To continue with other operations, run the skill again.
 
 ---
 
