@@ -24,6 +24,7 @@ A **Gemini CLI Skill** that automates GCP Vertex AI authentication setup and dep
 - **Interactive setup wizard** — 7-step guided process, no manual configuration needed
 - **Auto-create GCP project** — create a new GCP project via `gcloud` CLI without leaving the terminal
 - **Quick switch mode** — returning users can switch GCP projects without re-authentication; switching Google accounts still opens a browser
+- **Billing account renaming** — rename billing accounts to include expiration dates for easier identification (e.g., `Trial_Exp_20260501`)
 - **Automatic gcloud installation** — detects and installs Google Cloud CLI if missing (Windows / macOS / Linux)
 - **ADC authentication** — configures Application Default Credentials for Vertex AI
 - **Billing auto-switch Hook** — deployed as a Gemini CLI `SessionStart` hook, runs automatically on every startup
@@ -88,9 +89,10 @@ A **Gemini CLI Skill** that automates GCP Vertex AI authentication setup and dep
         │
         ▼
   Step 1 ── Environment detection
-             ├─ All ready (returning user) → Switch project or Full reset
-             │   └─ Switch project → Same account: skip to Step 4
-             │                     → Switch account: Step 3 → Step 4
+             ├─ All ready (returning user) → Switch project, Rename accounts, or Full reset
+             │   ├─ Switch project → Same account: skip to Step 4
+             │   │                 → Switch account: Step 3 → Step 4
+             │   └─ Rename accounts → Step R → Done
              └─ Not ready (first-time) → Continue full flow ↓
         │
         ▼
