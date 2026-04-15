@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2026-04-15
+
+### 🇺🇸 English
+
+#### Features
+- **Billing Account Renaming:** Added a new option for returning users to batch rename their Google Cloud billing accounts to include expiration dates (e.g., `Trial_Exp_20260501`) for easier tracking.
+
+#### Documentation
+- **README:** Updated Features list and How It Works diagram to include the new billing account renaming workflow.
+- **Contributing:** Added `rename-accounts.md` to the translation guide.
+
+---
+
+### 🇹🇼 繁體中文
+
+#### 功能 (Features)
+- **帳單帳戶重命名：** 為返回使用者新增批次重命名 GCP 帳單帳戶的選項，可自動將到期日加入名稱中（例如 `Trial_Exp_20260501`）以方便管理。
+
+#### 文件 (Documentation)
+- **README：** 更新功能特色與運作原理流程圖，加入帳單帳戶重命名流程。
+- **貢獻指南：** 在翻譯指南中加入 `rename-accounts.md`。
+
+---
+
 ## [1.3.1] - 2026-04-05
 
 ### 🇺🇸 English
