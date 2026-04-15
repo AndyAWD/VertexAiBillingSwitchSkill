@@ -60,6 +60,7 @@ Step 1: 環境偵測（靜默檢查）
   ├─ 全部就緒（返回使用者）
   │   → ask_user: 切換專案 / 完整重設
   │   → 完整重設: → Step 2 開始走完整流程
+  │   → 重命名帳單帳戶: → Step R → 完成
   │   → 切換專案: ask_user(同帳號 / 切換帳號)
   │       → 同帳號: Step 4(專案) → Step 5(設定, 跳過 Hook 部署) → Step 6(驗證)
   │       → 切換帳號: Step 3(認證) → Step 4(專案) → Step 5(設定, 跳過 Hook 部署) → Step 6(驗證)
@@ -84,6 +85,7 @@ Step 1: 環境偵測（靜默檢查）
 | 返回使用者 — 同帳號換專案 | 0 → 1 → 4 → 5（跳過 Hook 部署）→ 6 |
 | 返回使用者 — 切換帳號 | 0 → 1 → 3 → 4 → 5（跳過 Hook 部署）→ 6 |
 | 返回使用者 — 僅部署 Hook（已設定 Vertex AI） | 0 → 1 → H → 6 |
+| 返回使用者 — 重命名帳單帳戶 | 0 → 1 → R → 完成 |
 
 ---
 
@@ -153,10 +155,11 @@ test -f {home_dir}/.gemini/hooks/vertex-ai-billing-switch-hook.mjs && echo "OK" 
 使用 `ask_user`：
 
 ```json
-{"questions":[{"question":"偵測到環境已設定完成。你想要做什麼？","header":"操作模式","type":"choice","options":[{"label":"切換專案/帳號","description":"更換 GCP 專案或 Google 帳號（跳過安裝步驟）"},{"label":"完整重新設定","description":"從頭執行完整設定流程"}]}]}
+{"questions":[{"question":"偵測到環境已設定完成。你想要做什麼？","header":"操作模式","type":"choice","options":[{"label":"切換專案/帳號","description":"更換 GCP 專案或 Google 帳號（跳過安裝步驟）"},{"label":"重命名帳單帳戶","description":"重命名帳單帳戶以便識別（例如 Trial_Exp_20260501）"},{"label":"完整重新設定","description":"從頭執行完整設定流程"}]}]}
 ```
 
 - 選「完整重新設定」→ 繼續 **Step 2**（走完整流程）
+- 選「重命名帳單帳戶」→ 進入 **Step R**
 - 選「切換專案/帳號」→ 設定 `quick_switch = true`，接著：
 
 **STOP — 必須呼叫 ask_user，禁止假設答案，等待回應後才能繼續。**
@@ -307,6 +310,19 @@ gcloud services enable aiplatform.googleapis.com --project={project_id}
 > 注意：忽略該文件開頭「`quick_switch = false` 時才執行」的前置條件，在 `hook_only = true` 路線中直接執行所有步驟。
 
 完成後進入 **Step 6**（`hook_only = true`）。
+
+---
+
+## Step R：重命名帳單帳戶
+
+> 從 Step 1 選擇「重命名帳單帳戶」進入。
+> 此為獨立流程，不影響其他步驟。
+
+**請讀取 `references/rename-accounts.md` 並執行完整的重命名流程（R-1 列出帳戶、R-2 選擇命名策略、R-3 收集到期日、R-4 確認、R-5 執行重命名）。**
+
+完成或取消後，流程結束。顯示：
+
+> 如需執行其他操作，請重新觸發此 Skill。
 
 ---
 
