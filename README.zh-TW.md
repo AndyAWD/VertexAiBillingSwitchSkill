@@ -166,7 +166,8 @@ VertexAiBillingSwitchSkill/
     │   ├── references/                    # 按需讀取的參考文件
     │   │   ├── install-gcloud.md          # 各平台 gcloud 安裝指令
     │   │   ├── create-project.md          # 自動建立 GCP 專案子流程
-    │   │   └── deploy-hook.md             # 首次 Hook 部署
+    │   │   ├── deploy-hook.md             # 首次 Hook 部署
+    │   │   └── rename-accounts.md         # 批次重命名帳單帳戶
     │   ├── assets/
     │   │   └── vertex-ai-billing-switch-hook.mjs
     │   └── scripts/
@@ -179,7 +180,8 @@ VertexAiBillingSwitchSkill/
         │   ├── config-and-verify.md
         │   ├── install-gcloud.md
         │   ├── create-project.md
-        │   └── deploy-hook.md
+        │   ├── deploy-hook.md
+        │   └── rename-accounts.md
         ├── assets/
         │   └── vertex-ai-billing-switch-hook.mjs
         └── scripts/
@@ -202,6 +204,7 @@ VertexAiBillingSwitchSkill/
 | `skills/en/references/deploy-hook.md` | 翻譯 + 修改路徑 |
 | `skills/en/references/create-project.md` | 翻譯 |
 | `skills/en/references/install-gcloud.md` | 翻譯 |
+| `skills/en/references/rename-accounts.md` | 翻譯 |
 | `skills/en/assets/vertex-ai-billing-switch-hook.mjs` | 直接複製，不需修改 |
 | `skills/en/scripts/install-gcloud.mjs` | 直接複製，不需修改 |
 | `skills/en/scripts/consume-credits.mjs` | 直接複製，不需修改 |
@@ -220,6 +223,7 @@ VertexAiBillingSwitchSkill/
 - `skills/en/references/deploy-hook.md`
 - `skills/en/references/create-project.md`
 - `skills/en/references/install-gcloud.md`
+- `skills/en/references/rename-accounts.md`
 
 ## 翻譯規則（必須遵守）
 - 所有程式碼區塊（``` 包住的內容）**不翻譯**，保持原樣
@@ -260,7 +264,8 @@ skills/[LANG_CODE]/
 │   ├── config-and-verify.md
 │   ├── deploy-hook.md
 │   ├── create-project.md
-│   └── install-gcloud.md
+│   ├── install-gcloud.md
+│   └── rename-accounts.md
 ├── assets/
 │   └── vertex-ai-billing-switch-hook.mjs
 └── scripts/

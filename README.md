@@ -167,7 +167,8 @@ VertexAiBillingSwitchSkill/
     │   │   ├── config-and-verify.md       # Config and Verification (Step 5 & 6)
     │   │   ├── install-gcloud.md          # Platform-specific gcloud installation
     │   │   ├── create-project.md          # Auto-create GCP project sub-flow
-    │   │   └── deploy-hook.md             # First-time Hook deployment
+    │   │   ├── deploy-hook.md             # First-time Hook deployment
+    │   │   └── rename-accounts.md         # Batch rename billing accounts
     │   ├── assets/
     │   │   └── vertex-ai-billing-switch-hook.mjs
     │   └── scripts/
@@ -180,7 +181,8 @@ VertexAiBillingSwitchSkill/
         │   ├── config-and-verify.md
         │   ├── install-gcloud.md
         │   ├── create-project.md
-        │   └── deploy-hook.md
+        │   ├── deploy-hook.md
+        │   └── rename-accounts.md
         ├── assets/
         │   └── vertex-ai-billing-switch-hook.mjs
         └── scripts/
@@ -203,6 +205,7 @@ Want to add your language? You only need to translate a few Markdown files — t
 | `skills/en/references/deploy-hook.md` | Translate + update paths |
 | `skills/en/references/create-project.md` | Translate |
 | `skills/en/references/install-gcloud.md` | Translate |
+| `skills/en/references/rename-accounts.md` | Translate |
 | `skills/en/assets/vertex-ai-billing-switch-hook.mjs` | Copy as-is — no changes needed |
 | `skills/en/scripts/install-gcloud.mjs` | Copy as-is — no changes needed |
 | `skills/en/scripts/consume-credits.mjs` | Copy as-is — no changes needed |
@@ -221,6 +224,7 @@ Translate the Markdown body (everything after the `---` frontmatter block) from 
 - `skills/en/references/deploy-hook.md`
 - `skills/en/references/create-project.md`
 - `skills/en/references/install-gcloud.md`
+- `skills/en/references/rename-accounts.md`
 
 ## Rules — MUST follow
 - Keep ALL code blocks (``` blocks) unchanged — do NOT translate code
@@ -261,7 +265,8 @@ skills/[LANG_CODE]/
 │   ├── config-and-verify.md
 │   ├── deploy-hook.md
 │   ├── create-project.md
-│   └── install-gcloud.md
+│   ├── install-gcloud.md
+│   └── rename-accounts.md
 ├── assets/
 │   └── vertex-ai-billing-switch-hook.mjs
 └── scripts/
