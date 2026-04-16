@@ -207,7 +207,7 @@ async function run() {
     log('   If the browser cannot open automatically, use:', '36');
     log(`   gcloud auth application-default login --no-launch-browser --project=${projectId}`, '36');
     hookOutput(
-      `⚠️ ADC credentials not configured. Run in your terminal:\ngcloud auth application-default login --project=${projectId}\nIf browser can't open, add --no-launch-browser`
+      `⚠️ ADC credentials not configured. Run in your terminal:\ngcloud auth application-default login --project=${projectId}\nIf browser can't open, add --no-launch-browser (run in a new terminal window to avoid URL formatting issues)`
     );
     process.exit(0);
   }

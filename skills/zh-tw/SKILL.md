@@ -12,7 +12,7 @@ version: 1.3.1
 - 嚴格按照 Step 0 → Step 1 → ... → Step 6 的順序執行
 - 處理 `.env` 或 `settings.json` 等檔案時，你「必須且只能」使用內建的 `read_file` 和 `write_file` 工具（說明：若使用 `run_shell_command` 如 `echo` 或 `>`，在 Windows 下會產生 UTF-16 編碼損毀。為了確保行為一致，無論在 Mac、Linux 或 Windows，皆嚴禁使用 Shell 寫入檔案）
 - 每個標記 `ask_user` 的步驟都必須呼叫 `ask_user` 工具並等待回應
-- 絕對不要跳過步驟或假設使用者的回答
+- 你必須逐步執行所有步驟，並等待每個步驟的回應
 - 只在步驟指示時才使用 `run_shell_command` 執行指令
 - 如果某個步驟失敗，按照該步驟的「失敗處理」指示操作
 
@@ -569,6 +569,21 @@ powershell -Command "& '{gcloud_cmd}' billing accounts list --format=json"
 **請讀取 `references/create-project.md` 取得專案 ID 產生邏輯、專案建立（4-C）、帳單帳戶連結（4-D）與確認訊息（4-E）。**
 
 記錄 `{project_id}` 供後續步驟使用。進入 **Step 5**。
+
+---
+
+## Step 5: 失敗處理預警（關於 ADC 登入）
+
+在接下來的 Step 5 中，會讀取 `references/config-and-verify.md` 執行 ADC 登入。
+若發生 **ADC 登入失敗 — 瀏覽器未開啟** 的情況，請「必須且只能」使用 `ask_user` 工具來引導使用者手動執行指令。
+
+**STOP — 必須呼叫 ask_user，禁止假設答案，等待回應後才能繼續。**
+使用 `ask_user`：
+
+```json
+{"questions":[{"question":"瀏覽器似乎無法自動開啟。為避免網址複製時混入 `|` 分隔線，請開啟一個「全新的終端機視窗/分頁」（請保持 Gemini CLI 執行不要關閉），手動複製並執行以下指令：\n\n{cmd_string}\n\n完成登入後，請點選下方確認繼續。","header":"手動 ADC 登入","type":"choice","options":[{"label":"我已完成登入","description":"繼續下一步"}]}]}
+```
+*提示： `{cmd_string}` 為 `gcloud auth application-default login --no-launch-browser --project={project_id}`（若有路徑則加上 `& "..."`）。*
 
 ---
 

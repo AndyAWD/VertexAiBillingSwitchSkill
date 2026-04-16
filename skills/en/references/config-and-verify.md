@@ -80,17 +80,7 @@ powershell -Command "& '{gcloud_cmd}' auth application-default login --project={
 ### Failure handling
 
 - **API enablement fails**: Likely wrong Project ID or insufficient permissions. Ask user to verify the Project ID
-- **ADC login fails — browser did not open**: If no browser window appeared, retry with `--no-launch-browser`:
-
-  If `{gcloud_cmd}` = `gcloud`:
-  ```bash
-  gcloud auth application-default login --no-launch-browser --project={project_id}
-  ```
-  If `{gcloud_cmd}` is a full path:
-  ```bash
-  powershell -Command "& '{gcloud_cmd}' auth application-default login --no-launch-browser --project={project_id}"
-  ```
-  gcloud will print a URL in the terminal. Ask the user to open it in any browser, complete sign-in, then paste the verification code back into the terminal.
+- **ADC login fails — browser did not open**: Refer to the "Step 5: Failure Handling Warning" in `SKILL.md`. You MUST EXCLUSIVELY call `ask_user` to have the user run it manually in a new terminal window.
 
 - **ADC login fails — other reason**: User may have cancelled the browser login. Suggest re-running this step.
 

@@ -80,17 +80,7 @@ powershell -Command "& '{gcloud_cmd}' auth application-default login --project={
 ### 失敗處理
 
 - **API 啟用失敗**：可能是專案 ID 錯誤或權限不足，告知使用者檢查專案 ID
-- **ADC 登入失敗 — 瀏覽器未開啟**：若沒有瀏覽器視窗彈出，使用 `--no-launch-browser` 重試：
-
-  若 `{gcloud_cmd}` = `gcloud`：
-  ```bash
-  gcloud auth application-default login --no-launch-browser --project={project_id}
-  ```
-  若 `{gcloud_cmd}` 為完整路徑：
-  ```bash
-  powershell -Command "& '{gcloud_cmd}' auth application-default login --no-launch-browser --project={project_id}"
-  ```
-  gcloud 會在終端機顯示一個 URL，請使用者複製到瀏覽器完成登入，再將驗證碼貼回終端機。
+- **ADC 登入失敗 — 瀏覽器未開啟**：請參閱 `SKILL.md` 中的「Step 5: 失敗處理預警」，你「必須且只能」呼叫 `ask_user` 讓使用者在全新終端機視窗手動執行。
 
 - **其他 ADC 登入失敗**：可能是使用者取消了瀏覽器登入，建議重新執行此步驟。
 

@@ -207,7 +207,7 @@ async function run() {
     log('   若瀏覽器無法自動開啟，請改用：', '36');
     log(`   gcloud auth application-default login --no-launch-browser --project=${projectId}`, '36');
     hookOutput(
-      `⚠️ ADC 憑證未設定，請在終端機執行：\ngcloud auth application-default login --project=${projectId}\n若瀏覽器無法開啟，加上 --no-launch-browser`
+      `⚠️ ADC 憑證未設定，請在終端機執行：\ngcloud auth application-default login --project=${projectId}\n若瀏覽器無法開啟，請加上 --no-launch-browser（建議在全新的終端機視窗執行以免網址換行錯誤）`
     );
     process.exit(0);
   }

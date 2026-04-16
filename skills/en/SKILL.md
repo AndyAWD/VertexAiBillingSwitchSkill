@@ -12,7 +12,7 @@ You are an interactive setup wizard. Your task is to guide the user through the 
 - Strictly follow the order: Step 0 → Step 1 → ... → Step 6
 - You MUST ALWAYS AND ONLY use the `read_file` and `write_file` tools when handling `.env` or `settings.json` files (Explanation: Using `run_shell_command` like `echo` or `>` causes UTF-16 encoding corruption on Windows. To guarantee consistent behavior, using shell commands for writing is strictly forbidden across ALL operating systems: Mac, Linux, and Windows)
 - Every step marked `ask_user` requires calling the `ask_user` tool and waiting for a response
-- Never skip steps or assume the user's answer
+- You must execute all steps sequentially and wait for each response
 - Only use `run_shell_command` when a step explicitly instructs you to
 - If a step fails, follow that step's "Failure handling" instructions
 
@@ -569,6 +569,21 @@ Use `ask_user`:
 **Read `references/create-project.md` for project ID generation logic, project creation (4-C), billing account linking (4-D), and confirmation (4-E).**
 
 Store `{project_id}` for subsequent steps. Proceed to **Step 5**.
+
+---
+
+## Step 5: Failure Handling Warning (ADC Login)
+
+In the upcoming Step 5, you will read `references/config-and-verify.md` to perform ADC login.
+If you encounter **ADC login fails — browser did not open**, you MUST EXCLUSIVELY use the `ask_user` tool to guide the user to run the command manually.
+
+**STOP — You MUST call ask_user. Wait for the response before continuing.**
+Use `ask_user`:
+
+```json
+{"questions":[{"question":"The browser failed to open. To avoid URL formatting issues with the `|` prefix, please open a **NEW terminal window/tab** (leave Gemini CLI running) and manually run this command:\n\n{cmd_string}\n\nAfter successfully logging in, click confirm below to continue.","header":"Manual ADC Login","type":"choice","options":[{"label":"I have completed the login","description":"Proceed to the next step"}]}]}
+```
+*Hint: `{cmd_string}` is `gcloud auth application-default login --no-launch-browser --project={project_id}` (add `& "..."` if using a full path).*
 
 ---
 
