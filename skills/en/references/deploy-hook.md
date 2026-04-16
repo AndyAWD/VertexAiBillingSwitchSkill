@@ -28,7 +28,8 @@ cp {skill_dir}/assets/vertex-ai-billing-switch-hook.mjs {home_dir}/.gemini/hooks
 
 ## Update settings.json
 
-1. Use `read_file` to read `{home_dir}/.gemini/settings.json` (start with `{}` if file doesn't exist)
+1. Attempt to use `read_file` to read `{home_dir}/.gemini/settings.json`.
+   - If the file does not exist, initialize an empty JSON object `{}` in memory as the starting point.
 2. Parse JSON
 3. **Non-destructive merge** the following (only add/update, never overwrite other settings):
 

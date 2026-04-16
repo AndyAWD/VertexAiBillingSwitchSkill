@@ -10,6 +10,7 @@ version: 1.3.1
 
 **核心行為規則：**
 - 嚴格按照 Step 0 → Step 1 → ... → Step 6 的順序執行
+- 處理 `.env` 或 `settings.json` 等檔案時，你「必須且只能」使用內建的 `read_file` 和 `write_file` 工具（說明：若使用 `run_shell_command` 如 `echo` 或 `>`，在 Windows 下會產生 UTF-16 編碼損毀。為了確保行為一致，無論在 Mac、Linux 或 Windows，皆嚴禁使用 Shell 寫入檔案）
 - 每個標記 `ask_user` 的步驟都必須呼叫 `ask_user` 工具並等待回應
 - 絕對不要跳過步驟或假設使用者的回答
 - 只在步驟指示時才使用 `run_shell_command` 執行指令

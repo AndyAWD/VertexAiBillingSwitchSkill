@@ -28,7 +28,8 @@ cp {skill_dir}/assets/vertex-ai-billing-switch-hook.mjs {home_dir}/.gemini/hooks
 
 ## 更新 settings.json
 
-1. 使用 `read_file` 讀取 `{home_dir}/.gemini/settings.json`（若檔案不存在則從 `{}` 開始）
+1. 嘗試使用 `read_file` 讀取 `{home_dir}/.gemini/settings.json`。
+   - 若檔案不存在，請直接在記憶體中初始化一個空的 JSON 物件 `{}` 作為起點。
 2. 解析 JSON
 3. **非破壞性合併**以下內容（只新增/更新，不覆蓋其他設定）：
 
