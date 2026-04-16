@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.1] - 2026-04-16
+
+### 🇺🇸 English
+
+#### Fixed
+- **Authentication:** Replaced the direct execution of `gcloud auth login --no-launch-browser` with an interactive prompt directing users to execute it in a new terminal window, resolving URL copy issues caused by `|` prefix formatting.
+- **Cross-platform Stability:** Consolidated and enforced strict cross-platform file I/O mandates for `settings.json` and `.env` to prevent UTF-16 encoding corruption issues on Windows PowerShell.
+
+---
+
+### 🇹🇼 繁體中文
+
+#### 修復 (Fixed)
+- **認證登入：** 將直接執行 `gcloud auth login --no-launch-browser` 的行為改為互動式提示，引導使用者在全新的終端機視窗手動執行，解決因 `|` 分隔線導致的長網址複製錯誤問題。
+- **跨平台穩定性：** 集中並強制要求處理 `settings.json` 與 `.env` 檔案時必須使用原生讀寫工具，防止在 Windows 環境下產生 UTF-16 編碼損毀。
+
+---
+
 ## [1.4.0] - 2026-04-15
 
 ### 🇺🇸 English
